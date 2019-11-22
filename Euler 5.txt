@@ -1,0 +1,26 @@
+#V0
+def PE5(min_num, max_num, max_divis):
+   sol = 1
+   for i in range(min_num, max_num):
+       for x in range(min_num, max_num):
+           if i % x == 0:
+               sol += 1
+               print(i)
+           if i % x != 0:
+               sol = 1
+               print('now breaking')
+               break
+           if sol >= (max_divis):
+               print(i, 'solution found')
+               return(sol)
+
+PE5(1, 62000, 13)
+
+#V1
+def smallest_factor(r):
+    i=1
+    while not (all(map(lambda  x:i%x==0,list(range(1,r))))):
+        i+=1
+    return(i)
+
+print(smallest_factor(14))

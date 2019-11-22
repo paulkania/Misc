@@ -1,0 +1,21 @@
+import math as m
+import numpy as np
+
+def find_x_prime(x):
+    l1=[2,3]
+    i=5
+    f=m.ceil(m.sqrt(i))
+
+    while True:
+        if len(l1)== x :
+            break
+        if all(i%np.arange(3, f+1,2)!=0):
+            l1.append(i)
+        if all((i+2) % np.arange(3, f+1,2) != 0):
+            l1.append(i+2)
+        i+=6
+        f=m.ceil(m.sqrt(i))
+
+    return(l1[-1],l1)
+
+print(find_x_prime(10001))
