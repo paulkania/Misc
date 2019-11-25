@@ -1,5 +1,43 @@
-###really really slow
+####via summming
 
+import time
+start_time = time.time()
+
+import functools as fn
+
+# def my_triangle(tri):
+
+def tri_f(top):
+    c=0
+
+    summed_t=[]
+    for i in range(top,0,-1):
+        summed_t.append(i)
+    # print(summed_t)
+    s=sum(summed_t) #hey you can sum a list, hooray
+    # print(s)# print(len(summed_t))
+    for i in range(1,s+1):
+        if (s%i)==0:
+            c+=1
+            print(i)
+            # if c>200:
+            #     print(summed_t,c,i, 'top,c,i')
+            # if c>500:
+            #     return('A', summed_t, c, i)
+
+
+
+tri_f(10000)
+
+fin_time=time.time()
+d1=fin_time-start_time
+print(d1)
+
+
+##via fn.reduce
+
+import time
+start_time = time.time()
 import functools as fn
 
 
@@ -23,41 +61,13 @@ def trif(trif):
             if c>500:
                 return('A', trif, c, i)
             
-trif(3483480)
+trif(10000)
 # 
 # for i in range(1,1000000):
 #     trif(i)
-# 2031120(240),2162160(320),3483480(256)
 
 
 
-# while c<500:
-#     for i in range(1,trif+1):
-#         c=0
-#         if (trif%i)==0:
-#                  print(i)
-#             c+=1
-#             print(c)
-#             if c>500:
-#                 print(i,c)
-
-    
-#     
-#     
-# def triangle(a,b=1):
-#     c=0
-#     if a==1:
-#         for i in range(1,(b+1)):
-#             if (b)%i==0:
-#                 print(i)
-#                 c+=1
-#                 if c > 500:
-#                     return b, c, 'b,c triWER FOUND'
-#         return b,c,'b(tri),c(# of divisors)'
-# 
-#     else:
-#         print(b,'b', '\n', c,'c else-loop','\n','_-_-_-_-_')
-#         return triangle(a-1,a+b)
-# 
-# # print(triangle(5000))
-# # print(my_triangle(5000))
+fin_time=time.time()
+d1=fin_time-start_time
+print(d1)
