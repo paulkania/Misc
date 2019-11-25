@@ -1,3 +1,25 @@
+#Leo
+
+trinum = 1
+for i in range(2, 1000000000000): #essentially a while loop.
+    trinum = trinum + i  # 1+2+3+4+5+6
+    div =2
+    half = trinum // 2 #since max divisor is trinum//2 (works since trinum is only whole numbers)
+    num = 100 #???
+    for d in range(2, half):
+        if d >= num:
+            break
+        if trinum % d == 0:
+            num = trinum // d
+            div = div + 2 #what trick is there that i would do +1
+        if d * d == trinum: #why?
+            div -= 1 #
+
+    if div > 500:
+        print("FOUND:")
+        print(trinum)
+        break
+
 ####via summming
 
 import time
