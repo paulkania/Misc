@@ -29,27 +29,29 @@ import functools as fn
 
 # def my_triangle(tri):
 
+import time
+start_time = time.time()
+
+import functools as fn
+
+# def my_triangle(tri):
+
 def tri_f(top):
     c=0
-
-    summed_t=[]
-    for i in range(top,0,-1):
-        summed_t.append(i)
-    # print(summed_t)
-    s=sum(summed_t) #hey you can sum a list, hooray
-    # print(s)# print(len(summed_t))
-    for i in range(1,s+1):
-        if (s%i)==0:
+    s=1
+    for i in range(2,top+1):
+        s += i
+    print(s)
+    for dvsr in range(1,s//2):
+        if (s%dvsr)==0:
             c+=1
-            print(i)
-            # if c>200:
-            #     print(summed_t,c,i, 'top,c,i')
-            # if c>500:
-            #     return('A', summed_t, c, i)
+            print(dvsr,c)
+            if c>200:
+                print(s,c,i, 'top,c,i')
+            if c>500:
+                return('A', s, c, i)
 
-
-
-tri_f(10000)
+tri_f(8925)
 
 fin_time=time.time()
 d1=fin_time-start_time
