@@ -27,7 +27,7 @@ for i in d:
     while len(i)>12:
         e.append(i[:13])
         i=i[1:]
-e = [list(i) for i in e]
+e = [list(i) for i in e] #for each element ('731671765') in  the list, create a list for i. this somehow (magic?) also                                   #separates the i into i[0]->i[n], looking like ('7','3','1','6'..etc)
 
 e = [list(map(lambda a: int(a), i)) for i in e] #the step i had trouble with.
 e= [fn.reduce(lambda a,b: a*b, i) for i in e]
