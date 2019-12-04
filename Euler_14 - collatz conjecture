@@ -1,0 +1,37 @@
+#fairly simple.
+#i had it within 5 minutes, the temp list, sol list is a mighty useful data structure.
+#hiccups encountered:
+  #rather than emptying the temp list after every iteration, i only emptied it if the len(temp)> len(sol) was true,
+  #therefore it was able to grow to absurd ranged
+#tips: it's always easier, more manageable, to solve a smaller version of the problem, then apply it.
+#gonna read the overview/forum board, adios!
+  
+#--------------------------------------------------------------------------------------#
+#placement integer, would be nice
+#to use C++ or JS script here, just to define but not place variabld
+
+#999999,900000
+temp=[]
+sol=[]
+for i in range(999999,500000,-1):
+    temp.append(i)
+    while i != 1:
+        if i%2!= 0:
+            i=(i*3)+1
+            iterator += 1
+            temp.append(i)
+
+        if i%2==0:
+            i=i/2
+            iterator += 1
+            temp.append(i)
+    print('sol,temp',len(sol),len(temp),'\n')
+
+    if len(temp) > len(sol):
+        # print('sol,temp',len(sol),len(temp),'\n')
+        sol=temp
+        temp= []
+    if len(temp) <= len(sol):
+        temp=[]
+print(sol,len(sol))
+
