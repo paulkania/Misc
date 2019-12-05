@@ -1,0 +1,51 @@
+#done first iteration in an afternoon. next i'll make it from scratch. fun!
+#i thought i had a bug, but i was just experiencing the TRUTH.
+#now i survive, one milli-step smarter, understanding that a binary search requires a sorted array.
+
+import time
+import numpy as np
+
+bt=time.time()
+
+def binarysearch(inp_array, item_to_search_for):
+
+    left_half=0
+    right_half=len(inp_array)-1
+    i=0
+    while left_half <= right_half:
+        i+=1
+        mid = left_half + (right_half - left_half)/2;
+
+        if inp_array[int(mid)] == item_to_search_for:
+            print('1',i,left_half,right_half,mid,'------',inp_array[int(mid)])
+            ft=time.time()
+            print('PASS')
+            print(i2)
+            print('answer is at index ',mid)
+            print('answer is',item_to_search_for1)
+            print('answer took',i,'rounds to calculate')
+            return mid
+
+        # If item_to_search_for is greater, ignore left half
+        elif inp_array[int(mid)] < item_to_search_for:
+            print('2',i,left_half,right_half,mid,'------',inp_array[int(mid)])
+            left_half = mid + 1
+
+        # If item_to_search_for is smaller, ignore right half
+        elif inp_array[int(mid)] > item_to_search_for:
+            print('3',i,left_half,right_half,mid,'------',inp_array[int(mid)])
+            right_half = mid - 1
+
+    # If we reach here, then the element was not present
+    ft=time.time()
+    print('FAIL',ft-bt,i,'loops         ',item_to_search_for1)
+    print(i2)
+    return -1
+
+
+
+# Test array
+inp_array1 = np.random.randint(0,100,50) #unsorted array
+i2 = list(range(0,200,3)) #sorted array
+item_to_search_for1 = 138
+binarysearch(i2,item_to_search_for1)
