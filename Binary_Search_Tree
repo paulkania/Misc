@@ -1,54 +1,25 @@
-#done first iteration in an afternoon. next i'll make it from scratch. fun!
-#i thought i had a bug, but i was just experiencing the TRUTH.
-#now i survive, one milli-step smarter, understanding that a binary search requires a sorted array.
-#EDIT: next project, don't look at someone elses code for the starting point, try going from first principles, use
-        #use other code as help if u get st00k. things take time either way.
-        
+def bst(array,x):
+    left=0
+    right=len(ml)-1
+    iter=0
+    while left<=right: #the thing that took me the longest, tbh i cheated, but it's the only place i cheated.
+        iter+=1             #not to put myself down, but it's not a difficult algo, so there wasnt much oter
+                            #place to screwz up.
+        mid = left+(right-left)/(2)
 
-import time
-import numpy as np
-
-bt=time.time()
-
-def binarysearch(inp_array, item_to_search_for):
-
-    left_half=0
-    right_half=len(inp_array)-1
-    i=0
-    while left_half <= right_half:
-        i+=1
-        mid = left_half + (right_half - left_half)/2;
-
-        if inp_array[int(mid)] == item_to_search_for:
-            print('1',i,left_half,right_half,mid,'------',inp_array[int(mid)])
-            ft=time.time()
-            print('PASS')
-            print(i2)
-            print('answer is at index ',mid)
-            print('answer is',item_to_search_for1)
-            print('answer took',i,'rounds to calculate')
+        if ml[int(mid)] == x:
+            print(1,ml[int(mid)], 'is equal to', x, 'you found it after', iter ,'loops')
             return mid
+        elif ml[int(mid)]<x:
+            left = mid+1
+            print('2',ml[int(mid)],int(mid),iter)
+        elif ml[int(mid)]>x:
+            right = mid-1
+            print('3',ml[int(mid)],int(mid),iter)
 
-        # If item_to_search_for is greater, ignore left half
-        elif inp_array[int(mid)] < item_to_search_for:
-            print('2',i,left_half,right_half,mid,'------',inp_array[int(mid)])
-            left_half = mid + 1
+    if ml[int(mid)] != x:
+        print(x,'aint on the list')
 
-        # If item_to_search_for is smaller, ignore right half
-        elif inp_array[int(mid)] > item_to_search_for:
-            print('3',i,left_half,right_half,mid,'------',inp_array[int(mid)])
-            right_half = mid - 1
-
-    # If we reach here, then the element was not present
-    ft=time.time()
-    print('FAIL',ft-bt,i,'loops         ',item_to_search_for1)
-    print(i2)
-    return -1
-
-
-
-# Test array
-inp_array1 = np.random.randint(0,100,50) #unsorted array
-i2 = list(range(0,200,3)) #sorted array
-item_to_search_for1 = 138
-binarysearch(i2,item_to_search_for1)
+ml=list(range(0,1000,13))
+bst(ml,897)
+print(ml)
