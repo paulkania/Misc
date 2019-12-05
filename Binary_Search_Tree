@@ -1,6 +1,9 @@
 #done first iteration in an afternoon. next i'll make it from scratch. fun!
 #i thought i had a bug, but i was just experiencing the TRUTH.
 #now i survive, one milli-step smarter, understanding that a binary search requires a sorted array.
+#EDIT: next project, don't look at someone elses code for the starting point, try going from first principles, use
+        #use other code as help if u get st00k. things take time either way.
+        
 
 import time
 import numpy as np
