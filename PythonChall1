@@ -1,0 +1,18 @@
+#about 5 min, but I remember them tbh.
+#not including heinous string
+
+import time
+import collections as col
+bt=time.time()
+
+s=CP HERE
+
+c=col.Counter()
+for i in s:
+    c[i]+=1
+
+ft=time.time()
+for i in c:
+    print(i,c[i])
+print(ft-bt)
+
