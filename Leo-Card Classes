@@ -1,0 +1,257 @@
+// OurSort.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include "pch.h"
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+
+enum Suit
+{
+	Hearts,
+	Spades,
+	Diamonds,
+	Clubs
+
+};
+
+int SuitGreater(Suit a, Suit b)
+{
+	if (a == b)
+	{
+		return 2;
+	}
+	else if (a == Suit::Hearts) return true;
+	else if (a == Suit::Spades)
+	{
+		if (b == Suit::Diamonds or b == Suit::Clubs)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else if (a == Suit::Diamonds)
+	{
+		if (b == Suit::Clubs)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+}
+
+
+int GetSuitID(Suit a)
+{
+	if (a == Suit::Hearts)
+	{
+		return 0;
+	}
+	if (a == Suit::Spades)
+	{
+		return 1;
+	}
+	if (a == Suit::Diamonds)
+	{
+		return 2;
+	}
+	if (a == Suit::Clubs)
+	{
+		return 3;
+	}
+}
+
+Suit GetSuit(int a)
+{
+	if (a == 0)
+	{
+		return Suit::Hearts;
+	}
+	if (a == 1)
+	{
+		return Suit::Spades;
+	}
+	if (a == 2)
+	{
+		return Suit::Diamonds;
+	}
+	if (a == 3)
+	{
+		return Suit::Clubs;
+	}
+}
+
+
+struct Card
+{
+	static vector<string> sym;
+	static vector<string> suitsym;
+	int number;
+	Suit suit;
+
+	Card(int n, Suit s)
+	{
+		number = n;
+		suit = s;
+	}
+
+	static Card CreateRandom()
+	{
+
+		int suitnum = rand() % 4;
+		int num = rand() % 13;
+
+
+
+		return Card(num, GetSuit(suitnum));
+
+	}
+
+
+	string GetCardString()
+	{
+		string out = "";
+
+		out += sym[number];
+		out += suitsym[GetSuitID(suit)];
+
+		return out;
+
+	}
+
+
+	bool operator >= (Card other)
+	{
+		int SuitInt = SuitGreater(suit, other.suit);
+
+
+		if (SuitInt == 2)
+		{
+			return number > other.number;
+		}
+		else
+		{
+			return SuitInt == 1;
+		}	
+	}
+
+	friend ostream& operator << (ostream& os, const Card& c);
+
+
+
+
+};
+
+ostream& operator << (ostream& os, Card& c)
+{
+	os << c.GetCardString();
+	return os;
+}
+
+
+vector<string> Card::sym = { "2","3","4","5","6","7","8","9","10","J","Q","K","A" };
+vector<string> Card::suitsym = { "h","s","d","c" };
+
+
+
+
+template <class T> 
+void printvec(vector<T> arr)
+{
+	cout << "[";
+	for (int i = 0; i < arr.size(); i++)
+	{
+		cout << arr[i] << ", ";
+	}
+	cout << "]"<<endl;
+
+}
+
+template <class T>
+int OurSort(vector<T>& arr)
+{
+	int a = 0;
+	int i = 0;
+
+	while (a != arr.size())
+	{
+		int s = a;
+		while (s - 1 >= 0 &&  arr[s - 1]>= arr[s])
+		{
+			T temp = arr[s];
+			arr[s] = arr[s-1];
+			arr[s-1] = temp;
+
+			s -= 1;
+			i++;
+		}
+
+		a++;
+	}	
+
+	return i;
+}
+
+template <class T> 
+int TwoSort(vector<T>& arr)
+{
+	int i = 0;
+	int as = 0;
+
+	while (as != arr.size()-1)
+	{
+		int ss = as + 1;
+
+		while (ss != arr.size())
+		{
+			if (arr[as] > arr[ss])
+			{
+				T temp = arr[as];
+				arr[as] = arr[ss];
+				arr[ss] = temp;
+			}
+			ss += 1;
+			i++;
+
+		}
+		as++;
+	}
+
+	return i;
+}
+
+template <class T>
+void ThreeSort(vector<T>& arr)
+{
+
+
+
+
+}
+
+vector<Card> myCards;
+int main()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		myCards.push_back(Card::CreateRandom());
+	}
+
+
+
+	printvec(myCards);
+	int n =OurSort(myCards);
+	printvec(myCards);
+
+	cout <<n<< endl;
+}
+
