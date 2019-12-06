@@ -1,0 +1,29 @@
+#python 0 i did in the browser console with JS..might be my first JS use this year ha.
+
+string="""g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp.
+bmgle gr gl zw fylb gq glcddgagclr ylb rfyr'q ufw rfgq rcvr gq qm jmle.
+ sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu ynnjw ml rfc spj"""
+s='qrstuvwxyz'
+url='map'
+
+#ord('a')
+#chr(99)
+# string = [chr(ord(i)+2) for i in string if ord(i)<120]
+x=''
+for i in url:
+    if ord(i)<121:
+        x+=chr(ord(i)+2)
+    elif ord(i)>=121 and ord(i)<=124:
+        x+=chr(ord(i)-24)
+    else:
+        x += chr(ord(i) + 2)
+x=x.replace('"',' ')
+print(x)
+
+# string=string.join(i)
+# string="".join(string)
+# print(string)
+
+w=print(ord('y'))#122,y=121
+q=print(ord('a'))#122,y=121
+print(121-97)#122,y=121
