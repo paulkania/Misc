@@ -1,0 +1,20 @@
+s='andiuwjNIUEbJbHJBbjbKNnnjnABCdABCasdkniwniunwd'
+iter=0
+place=0
+l=[]
+for i in s:
+    place+=1
+    if i.isupper():
+        iter+=1
+        print(i)
+    else:
+        iter=0
+        print(i,'iter reset')
+        continue
+    if iter==3:
+        print(s[place-3:place+4],'appending')
+        # if i-2
+        l.append(s[place-3:place+4])# [i-3:i+3]
+
+
+print(l)
