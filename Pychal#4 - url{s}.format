@@ -1,0 +1,22 @@
+import re
+import urllib.request
+#what i find interesting about this problem is 
+#if you  go to nothing=(empty) it will give the page 
+#that is immediately after peak.html.
+#i noticed this because at peak.html there is no numerics.
+#so in order for my program to have not broken, =empty
+#would have necessarily gone there.
+#break time.
+
+s=12345 #kickoff variable
+
+for i in range(400):
+    filename = urllib.request.urlopen("http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing={0}".format(s))
+    page = filename.read().decode('utf-8')
+
+    li=[]
+    for i in page:
+        if i.isnumeric():
+            li.append(i)
+    s = "".join(li)
+    print(s,page)
