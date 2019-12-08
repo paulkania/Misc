@@ -1,4 +1,8 @@
+#this answer is frustrating because even when i knew I had it, i didnt see the lowercase pattern, between answers.
+#which is sort of my bad, but sort of bad level design.
+
 import os
+import re
 
 os.chdir(r"C:\Users\HP\Desktop") #changes to correct directory from absolute reference
 print(os.getcwd(),'<--current directory') #prints current directory to ensure you're in the right folder
@@ -1244,7 +1248,7 @@ IKGqNZroQwTworzNcXZRBNYSQgMiwoqjgHnCOZYAWMonmDGAYJcPvecBaHeJQWolQZmYhKoBZaVoCQmf
 BGRdjBsnBnOYLIQXIeTfmwUxtADmBkhDXEZqGsBGOwMQqyLHOObREqMGkSeHepgonKmvKggqnntwXlxW
 juNjEvszhIaFFlEHHgiLrYDAsrfdvHuyXyEgvLYCEmVLnmjlUxrWvcIdFkkJjaaNZqePUSEHhecBbHRN
 VLquogLIjUrjRgsXGywAquhfRjUMvmIEDSOXFkupsQARTCqbVjFbKicfFTtVKxbqfSbLlybPvcUSasUP
-mkPytpvUSvuPtLFmkeKQIWNaJouCnyPyiaRBSYuvMtBXylHWIKkexawFeNwjIpTJBImSUXAAipljptIj
+mkPytpvUSvuPtLFmkeKQIWNaJouCnyPyiaRBSYuvMtBaZZZaXXXaXylHWIKkexawFeNwjIpTJBImSUXAAipljptIj
 MoxFBReUIhcyLaoBVPIZSWfJDMJMwEWaZbjFpgUpXQYtmwDUeUdUruxpUcCGdnlpkCXZlEETSCPauRwg
 YYCcnRpqBUyMnvWUNyoXhKqwZsrTLteXQVxOSztAxqBwEsKPLLYmXPdkOoUfuEcJYdIfxQXgalSKJfEt
 TOKazgVKoiUsuemONwHeyCVCuUBkbAMifDjSeyplNXUSPpvzJCFZmLTJQGPRVuSVtZUujsLwtqcGoEka
@@ -1255,31 +1259,48 @@ tWsLrtDqToVGVOQAOvyIdhWOeHKcykQJxjgqlmGKMiKnmUTJrgDRXaroZEQnyXSoGVDmUUXDiclJejRR
 wgDEIuvHFxRfQhtqLKnJfONtkcnDORkZqbtPplsjjTEIsquhSsQTwNZuPVxaTqDvwMONBfCsNJuJpJHZ
 dCdFLtBQPtFQuCdKOrpndJNUFQIDSbetUKylhSUjcDVtbiQrWMRQhAwGUZyPneCGUjGBBTkLqxLAXXtB
 KfErkDaWMFZZeuqDmXKJEGHyToPUhPphfVhgUZgbIuRAtWnroImpJKqqmEZqeNQCKzhjIkKQHURWLXFw
-PBuijeoTSpsVLaOGuLVjMZXkBvVXwUuHfBihziiavGSYofPNeKsTXruMUumRRPQJzvSzJkKbtSipiqBd"""
+PBuijeoTSpsVLaOGuLVjMZXkBvVXwUuHfBihziiavGSYofPNeKsTXruMUumRRPQJzvSzJkKbtSipiqBd""".replace('\n','')
 
 
 iter=0
-place=0
+place=-1
 l=[]
 for i in s:
-    place+=1
+    place += 1
+    # print(i,place,iter)
     if i.isupper():
         iter+=1
         # print(i)
-    else:
+    elif i.islower():
         iter=0
         # print(i,'iter reset')
         continue
+
     if iter==3:
         # print(s[place-3:place+4],'appending')
         # if i-2
-        l.append(s[place-4:place+5])# [i-3:i+3]
+        l.append(s[place-3:place+6])# [i-3:i+3]
 
 # print(l)
 
+#for i, pet in enumerate(pets):
+# print i, pet
+for place,item in enumerate(l):
+    # print(item[0],place)
+    # print(item[3],item[4:7],item[7])
+    if (item[4]).islower() and (item[5:8]).isupper() and (item[8]).islower():
+        print(item)
+        print(item[4])
 
-for i in l:
-    if (i[3]).islower() and (i[4:7]).isupper() and (i[7]).islower() and i():
-        print(i)
-#program it in such that the i[-1] is lower...although that shhould work considering the iter==3 sequence.
+pat = re.compile('''
+    [^A-Z]    # any character except a capital letter
+    [A-Z]{3}  # three capital letters
+    (         # the beginning of a capturing group
+    [a-z]     # one lowercase letter
+    )         # the end of the group
+    [A-Z]{3}  # three capital letters
+    [^A-Z]    # any character except a capital letter
+    ''', re.VERBOSE)
 
+x=re.findall(pat, s)
+print(x)
