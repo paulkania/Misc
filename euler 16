@@ -1,0 +1,14 @@
+a=str(2**1000)
+
+print(a,len(a))
+
+l=[]
+for i in a:
+    l.append(i)
+
+x=0
+for place,item in enumerate(l):
+    print('ee',place,item)
+    x += int(item)
+
+print(x,'is answer')
