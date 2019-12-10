@@ -1,0 +1,7 @@
+intcode= [1,9,10,3,2,3,11,0,99,30,40,50]
+intcode = list(map(lambda x,y:(x,y),range(len(intcode)),intcode))
+
+# print(intcode)
+
+for i in intcode:
+    print(i,i[0],i[1])
