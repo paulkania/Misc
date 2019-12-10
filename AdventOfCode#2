@@ -1,7 +1,63 @@
-intcode= [1,9,10,3,2,3,11,0,99,30,40,50]
-intcode = list(map(lambda x,y:(x,y),range(len(intcode)),intcode))
+#OK
+#it's funny. Once I learn a new tool I really want to apply it everywhere (enumerate)
+#the thing is, lists are automatically indexed just by calling list[index].
+#so the solution was fairly simple in that regard.
+#i feel like it wasnt hard, and im sleepy, but it wasnt super easy either?
+#i should be proud of myself, really.
 
-# print(intcode)
+# intcode= [1,9,10,3,2,3,11,0,99,30,40,50] #pass 3500,9,10,70,2,3,11,0,99,30,40,50
+# intcode=[1,0,0,0,99] #pass    2,0,0,0,99
+intcode=[2,3,0,3,99]#pass
+intcode=[2,4,4,5,99,0]#pass
+intcode=[1,1,1,4,99,5,6,0,99]#pass
 
-for i in intcode:
-    print(i,i[0],i[1])
+        #[0,1,02,3,4,5,-6,7,-8,-9,10,11]
+intcode=[1,12,2,3,1,1,2,3,1,3,4,3,1,5,0,3,2,1,13,19,1,9,19,23,1,6,23,27,2,27,9,31,2,6,31,35,1,5,35,39,1,10,39,43,1,43,13,47,1,47,9,51,1,51,9,55,1,55,9,59,2,9,59,63,2,9,63,67,1,5,67,71,2,13,71,75,1,6,75,79,1,10,79,83,2,6,83,87,1,87,5,91,1,91,9,95,1,95,10,99,2,9,99,103,1,5,103,107,1,5,107,111,2,111,10,115,1,6,115,119,2,10,119,123,1,6,123,127,1,127,5,131,2,9,131,135,1,5,135,139,1,139,10,143,1,143,2,147,1,147,5,0,99,2,0,14,0]
+
+# pass- dont call me , dont text me, after 2am..bowbowbow
+
+#possible breakthrough... intcode[0] gives 1...indexing exists inherently in lists.
+#there is no need to enumerate, no need to zipAKAtuple, no need to add elements that represent an index.
+#there is also no need to be upset
+#there is also no need to work today...im pooped as hick.
+#take er easy....remember when youd make 200 planting and it was insane?
+
+
+#IAMLEGEND
+#i: index
+#intcode[i]: code
+#a,b = addition,addition
+#c = index of where a,b effects are manifested.
+
+print(len(intcode))
+print('orogin',intcode)
+for i in range(len(intcode)):
+    if i%4==0:
+        # print(i,intcode[i])
+        if intcode[i] ==1:
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            print('here',i,a,b,c)
+            intcode.insert((c),(intcode[a] + intcode[b])) #my inserting and addition is naive, its adding the values, not the pointers to the other values.
+            print('postinster',intcode,intcode[a])
+            del (intcode[c+1])
+            print('mark',intcode,i)
+
+        elif intcode[i] == 2:
+            print('access')
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            # intcode[i+a],intcode[i+b])
+            print('cat',i,a,b,c)
+            intcode.insert((c),(intcode[a] * intcode[b]))
+            print('postinster',intcode,intcode[a])
+            del (intcode[c+1])
+            print('postdel',intcode,intcode[a])
+
+        if intcode[i] == 99:
+            print('breaking','\n')
+            break
+print(len(intcode))
+print (intcode)
