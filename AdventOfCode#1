@@ -1,16 +1,8 @@
-#on the first day of christmas my true elves came to me.
-#1 stuck santa needing rocket fuel
-
-# a=int(12/3)-2
-# b=int(14/3)-2
-# c=int(1969/3)-2
-# d=int(100756/3)-2
-#
-# print(a,b,c,d)
-# print(a+b+c+d)
+#INSTEAD OF THE HEINOUS LONG LIST, IF YOU USE, 100756,1969,14 AS THE LIST, THE PRACTICE SUM
+#WORKS OUT, AND THEN YOU EXTRAPOLATE...
 
 
-inp="""
+m="""
 149579
 95962
 97899
@@ -111,9 +103,26 @@ inp="""
 96278
 144766
 55755""".split() #didnt need to replace '\n' since i was alreaady splitting
+m=[int(i) for i in m]
 
-inp = [int(i) for i in inp]
-inp = [int(i/3)-2 for i in inp]
-inp=sum(inp)
-print(inp)
+#Part A/B
+def initialfuel(modules):
+    fuel = [int(i/3)-2 for i in modules]
+    fuel=sum(fuel)
+    return fuel
+# print(initialfuel(m)) #correct a/b
 
+
+#Part B/B
+additionalfuel=0
+for module in m:
+    while module > 5: #while fuel>0
+        decrement = int((module / 3)) - 2
+        additionalfuel = int(additionalfuel) +  decrement
+        module= decrement
+print(additionalfuel) #correct b/b
+
+
+# print(1691025+3382136) #guess is incorrect
+# print(5070314+3382136) #guess is too high
+# print(5070314)         #yeah fuck yeah
