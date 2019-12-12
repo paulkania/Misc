@@ -1,30 +1,70 @@
-
 import os
-import pandas as pd
-# import csv
-
-
-os.chdir(r"C:\Users\prozehnal\Desktop")
-print(os.getcwd(),'<--current directory')
-print(os.listdir(os.getcwd()),'<----files in current dir')
-wire1,wire2 = open('123.txt','r') , open('321.txt','r')
+x,y = 0,0
+pos=[(x,y)]
+os.chdir(r"/Users/LandOfTheRisingSun/Desktop/adventday3")
+# print(os.getcwd(),'<--current directory')
+# print(os.listdir(os.getcwd()),'<----files in current dir')
+wire1,wire2 = open('w1a.txt','r') , open('w2a.txt','r')
 wire1,wire2 = wire1.read().replace(',',' ').split(), wire2.read().replace(',',' ').split()
+# print(wire1)
+# print(wire2)
+wire1= ['U7','R6','D4','L4']
+wire2=['R8','U5','L5','D3']
 
-#line above is so gross i want to burn my eyes out
-#chaining in this way goes left to right in terms of operation
-#eplicitly: read runs, replace runs, split runs.
+# for i in wire1:
+#     wire1.insert(1,',')
+#     print(i)
+# print(wire1)
 
 # print(type(wire1),wire1[0],wire1)
 def intify(wire):
     list=[]
     for i in wire:
-        i=i.replace('R','').replace('L','-').replace('U','-').replace('D','')
-        i=int(i)
+        # i=i.replace('R','R,').replace('L','L,').replace('U','U,').replace('D','D,')
+        i=i.replace('R','R ').replace('L','L ').replace('U','U ').replace('D','D ').split()
+        # for element in i:
+        #     print(element)
+        # i = [int(i[1] for el in i[1])]
+        i[1]=int(i[1])
+        # print(i,i[1],type(i[1]))
         list.append(i)
+    # print(type(list),list[3][0],list[0],list) #nested list
     return(list)
+# print(pos)
+# print(intify(wire1))
+for i in intify(wire1):
+    print('access',i,i[0])
+    while i[1] != 0: ####   U
 
-print(len(intify(wire1)))
-print(len(intify(wire2)))
+        if i[0] == 'U':
+            pos.append((x,y-1))
+            y-=1
+            i[1]-=1
+            print(pos)
+    while i[1] != 0:#####   D
+        if i[0] == 'D':
+            pos.append((x,y+1))
+            y+=1
+            i[1]-=1
+            print(pos)
+    while i[1] != 0:
+        if i[0] == 'R':
+            pos.append((x+1,y))
+            x+=1
+            i[1]-=1
+            print(pos)
+    while i[1] != 0:
+        if i[0] == 'L':
+            pos.append((x-1,y))
+            x-=1
+            i[1]-=1
+            print(pos)
+    # print(i,i[0],i[1])
+
+
+#
+# print(len(intify(wire1)))
+# print(len(intify(wire2)))
 
 
 
