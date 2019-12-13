@@ -1,22 +1,24 @@
 import os
-x,y = 0,0
-pos=[(x,y)]
-os.chdir(r"/Users/LandOfTheRisingSun/Desktop/adventday3")
-# print(os.getcwd(),'<--current directory')
-# print(os.listdir(os.getcwd()),'<----files in current dir')
-wire1,wire2 = open('w1a.txt','r') , open('w2a.txt','r')
+
+os.chdir(r"\Users\HP\Desktop\coderun") # use terminal 'cd *space* *tab* to get to where u wanna go
+print(os.getcwd(),'<--current directory','sanity check')
+print(os.listdir(os.getcwd()),'<----files in current dir') #sh
+wire1,wire2 = open('w2a.txt','r') , open('w2b.txt','r')
 wire1,wire2 = wire1.read().replace(',',' ').split(), wire2.read().replace(',',' ').split()
 # print(wire1)
 # print(wire2)
-wire1= ['U7','R6','D4','L4']
-wire2=['R8','U5','L5','D3']
 
-# for i in wire1:
-#     wire1.insert(1,',')
-#     print(i)
-# print(wire1)
+
+#test1 -Pass
+# wire1= ['U7','R6','D4','L4']
+# wire2=['R8','U5','L5','D3']
+# #test 2 PASS w2a,w2b - R75,D30,R83,U83,L12,D49,R71,U7,L72 && U62,R66,U55,R34,D71,R55,D58,R83
+#test 3 - R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51  &&& U98,R91,D20,R16,D67,R40,U7,R15,U6,R7
+#goldstar1 - pass attempt1/1
+
 
 # print(type(wire1),wire1[0],wire1)
+
 def intify(wire):
     list=[]
     for i in wire:
@@ -32,44 +34,49 @@ def intify(wire):
     return(list)
 # print(pos)
 # print(intify(wire1))
-for i in intify(wire1):
-    print('access',i,i[0])
-    while i[1] != 0: ####   U
 
+def line_drawer(wire):
+    x, y = 0, 0
+    pos = [(x, y)]
+    for i in intify(wire): #here im calling the other function ! cool!
+        # print('access',i,i[0])
         if i[0] == 'U':
-            pos.append((x,y-1))
-            y-=1
-            i[1]-=1
-            print(pos)
-    while i[1] != 0:#####   D
+            while i[1] != 0: ####   UI
+                pos.append((x,y-1))
+                y-=1
+                i[1]-=1
+                # print(pos)
         if i[0] == 'D':
-            pos.append((x,y+1))
-            y+=1
-            i[1]-=1
-            print(pos)
-    while i[1] != 0:
+            while i[1] != 0:#####   D
+                pos.append((x,y+1))
+                y+=1
+                i[1]-=1
+                # print(pos)
         if i[0] == 'R':
-            pos.append((x+1,y))
-            x+=1
-            i[1]-=1
-            print(pos)
-    while i[1] != 0:
+            while i[1] != 0:
+                pos.append((x+1,y))
+                x+=1
+                i[1]-=1
+                # print(pos)
         if i[0] == 'L':
-            pos.append((x-1,y))
-            x-=1
-            i[1]-=1
-            print(pos)
-    # print(i,i[0],i[1])
+            while i[1] != 0:
+                pos.append((x-1,y))
+                x-=1
+                i[1]-=1
+                # print(pos)
+    return(pos)
 
+# print(line_drawer(wire1))
+# print(line_drawer(wire2))
+# print(manhattan)
+def manhattan(wireA,wireB):
+    crosses=[]
+    manhattan=set(line_drawer(wireA)) & set(line_drawer(wireB))
+    for i in manhattan:
+        cross= abs(i[0])+abs(i[1])
+        if cross > 0:
+            crosses.append(cross)
+    return(crosses)
 
-#
-# print(len(intify(wire1)))
-# print(len(intify(wire2)))
-
-
-
-# path=[]# path=path.replace()
-# path = [str(item) for item in path]
-# path=[R8,U5,L5,D3]
-#
-# print(path)
+print('answer',min(manhattan(wire1,wire2)))
+print('crosses',manhattan(wire1,wire2))
