@@ -1,137 +1,68 @@
 import os
-x,y = 0,0
-pos=[(x,y)]
-# os.chdir(r"/Users/LandOfTheRisingSun/Desktop/adventday3")
-# print(os.getcwd(),'<--current directory')
-# print(os.listdir(os.getcwd()),'<----files in current dir')
-# wire1,wire2 = open('w1a.txt','r') , open('w2a.txt','r')
+
+#if,if,if, 47 sec
+#if,elif...44sec
+#Future: How to improve speed?
+#Future: use the current line_drawer def to find answer A (so using the key value of dict, instead)
+        #of tuple...probably pretty trivial to do, still i'd like to try.
+
 
 # os.chdir(r"\Users\HP\Desktop\coderun") # use terminal 'cd *space* *tab* to get to where u wanna go
 print(os.getcwd(),'<--current directory','sanity check')
 print(os.listdir(os.getcwd()),'<----files in current dir') #sh
 wire1,wire2 = open('w1.txt','r') , open('w2.txt','r')
 wire1,wire2 = wire1.read().replace(',',' ').split(), wire2.read().replace(',',' ').split()
-# print(wire1)
-# print(wire2)
-# wire1= ['U7','R6','D4','L4']
-# wire2=['R8','U5','L5','D3']
 
-# for i in wire1:
-#     wire1.insert(1,',')
-#     print(i)
-# print(wire1)
 
 #test1 -Pass
+# wire1= ['U7','R6','D4','L4']
+# wire2=['R8','U5','L5','D3']
 # wire1= ['U7','R6','D4','L4']
 # wire2=['R8','U5','L5','D3']
 # #test 2 PASS -610- w2a,w2b - R75,D30,R83,U83,L12,D49,R71,U7,L72 && U62,R66,U55,R34,D71,R55,D58,R83
 #test 3 pass-410-- R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51  &&& U98,R91,D20,R16,D67,R40,U7,R15,U6,R7
 #goldstar1 - pass attempt1/1
-
-
-# print(type(wire1),wire1[0],wire1)
+#star#2 - required tuple->dict refactor
 
 def intify(wire):
     list=[]
     for i in wire:
-        # i=i.replace('R','R,').replace('L','L,').replace('U','U,').replace('D','D,')
         i=i.replace('R','R ').replace('L','L ').replace('U','U ').replace('D','D ').split()
-        # for element in i:
-        #     print(element)
-        # i = [int(i[1] for el in i[1])]
         i[1]=int(i[1])
-        # print(i,i[1],type(i[1]))
         list.append(i)
-    # print(type(list),list[3][0],list[0],list) #nested list
-    return(list)
-# print(pos)
-# print(intify(wire1))
-# for i in intify(wire1):
-#     print('access',i,i[0])
-#     while i[1] != 0: ####   U
-
+    return list
 
 def line_drawer(wire):
     x, y, step = 0,0,0
     pos = (x, y)
     d_ele = {pos:step}
-    for i in intify(wire): #here im calling the other function ! cool!
-        # print('access',i,i[0])
+    for i in intify(wire):
         if i[0] == 'U':
             while i[1] != 0: # while instructor has valid instruction (has juice in it)
                 d_ele.update({(x,y-1):step+1})
-                y-=1 #increments down the tuple
+                y-=1 #increments down the tuple (otherwise y would always = 0-1, now its -1-1,-2-1)
                 i[1]-=1 #increments down the instructor (R26-R25)
                 step+=1 #increments the step
-                # print('U',pos)
-        if i[0] == 'D':
+        elif i[0] == 'D':
             while i[1] != 0:#####   D
                 d_ele.update({(x,y+1):step+1})
                 y+=1
                 i[1]-=1
                 step+=1
-                # print('D',pos)
-        if i[0] == 'R':
+        elif i[0] == 'R':
             while i[1] != 0:
                 d_ele.update({(x+1,y):step+1})
                 x+=1
                 i[1]-=1
                 step+=1
-                # print('R',pos,step+1)
-        if i[0] == 'L':
+        elif i[0] == 'L':
             while i[1] != 0:
                 d_ele.update({(x-1,y):step+1})
                 x-=1
                 i[1]-=1
                 step+=1
-                # print('L',pos)
-    # print('endof linedrawer',pos,'&',step)
     return d_ele
-
-# print(type(line_drawer(wire1)),line_drawer(wire1)) #got a working dict ye!
-# print(type(line_drawer(wire2)),line_drawer(wire2))
-# print(line_drawer(wire1).keys(),'\n',line_drawer(wire2).keys())
 ans=[]
 for key in set(line_drawer(wire1).keys() & line_drawer(wire2).keys()):
-    # print(line_drawer(wire2)[key]+line_drawer(wire1)[key])
     ans.append(line_drawer(wire2)[key]+line_drawer(wire1)[key])
-# print(ans)
 print(sorted(ans))
-# print(min(ans))
-    # print('answer',min(line_drawer(wire2)[key]+line_drawer(wire1)[key]))
-
-
-
-
-
-
-#
-# print(len(intify(wire1)))
-# print(len(intify(wire2)))
-
-#             while i[1] != 0:
-#                 pos.append((x-1,y))
-#                 x-=1
-#                 i[1]-=1
-#                 # print(pos)
-#     return(pos)
-#
-# # print(line_drawer(wire1))
-# # print(line_drawer(wire2))
-# # print(manhattan)
-# def manhattan(wireA,wireB):
-#     crosses=[]
-#     manhattan=set(line_drawer(wireA)) & set(line_drawer(wireB))
-#     for i in manhattan:
-#         cross= abs(i[0])+abs(i[1])
-#         if cross > 0:
-#             crosses.append(cross)
-#     return(crosses)
-#
-# # path=[]# path=path.replace()
-# # path = [str(item) for item in path]
-# # path=[R8,U5,L5,D3]
-# #
-# # print(path)
-# print('answer',min(manhattan(wire1,wire2)))
-# print('crosses',manhattan(wire1,wire2))
