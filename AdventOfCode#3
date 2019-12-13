@@ -1,10 +1,11 @@
 import os
+import time
 import itertools
-
+st=time.time()
 os.chdir(r"\Users\HP\Desktop\coderun") # use terminal 'cd *space* *tab* to get to where u wanna go
 # print(os.getcwd(),'<--current directory','sanity check')
 # print(os.listdir(os.getcwd()),'<----files in current dir') #sh
-wire1,wire2 = open('w2a.txt','r') , open('w2b.txt','r')
+wire1,wire2 = open('wt1.txt','r') , open('wt2.txt','r')
 wire1,wire2 = wire1.read().replace(',',' ').split(), wire2.read().replace(',',' ').split()
 # print(wire1)
 # print(wire2)
@@ -25,21 +26,15 @@ def intify(wire):
     for i in wire:
         # i=i.replace('R','R,').replace('L','L,').replace('U','U,').replace('D','D,')
         i=i.replace('R','R ').replace('L','L ').replace('U','U ').replace('D','D ').split()
-        # for element in i:
-        #     print(element)
-        # i = [int(i[1] for el in i[1])]
         i[1]=int(i[1])
-        # print(i,i[1],type(i[1]))
         mlist.append(i)
     # print(type(list),list[3][0],list[0],list) #nested list
     return mlist
-# print(pos)
-# print(intify(wire1))
 
 def line_drawer(wire):
     x, y, step = 0,0,0
 
-    pos = [(x, y,step,)]
+    pos = [(x,y,step)]
     for i in intify(wire): #here im calling the other function ! cool!
         # print('access',i,i[0])
         if i[0] == 'U':
@@ -74,7 +69,7 @@ def line_drawer(wire):
     return pos
 def stepless(wire):
     x, y = 0,0
-    pos = [(x, y)]
+    pos = [(x, y,)]
     for i in intify(wire): #here im calling the other function ! cool!
         # print('access',i,i[0])
         if i[0] == 'U':
@@ -105,40 +100,58 @@ def stepless(wire):
     return pos
 
 # print(line_drawer(wire1),'\n\n\n',stepless(wire1))
-ans=[]
+ansi=[]
+ansj=[]
 for i in line_drawer(wire1):
     for j in stepless(wire2):
         if set(j).issubset(i) and sum(j)>0:
             # print ('losin',j,i)
-            ans.append(i)
+            ansi.append(i)
+            ansj.append(j)
+
 for i in line_drawer(wire2):
     for j in stepless(wire1):
         if set(j).issubset(i) and sum(i)>0:
             # print ('fant',j,i)
-            ans.append(i)
-ans=sorted(ans)
-for i in ans:
-    print(i)
+            ansi.append(i)
+            ansj.append(j)
+
+# ansi=sorted(ansi)
+# for i in ansi:
+#     print(i)
+
+for i,j in itertools.combinations(ansi,2):
+    # print(i,j,i[0],j[0])
+    if i[0]==j[0] and i[1]==j[1]:
+        print(i[2]+j[2])
+
+
+et=time.time()
+ft=et-st
+print(ft,'secs')
+# ansj=sorted(ansj)
+# for i in ansj:
+#     print(i)
 # print('wire1',line_drawer(wire1))
 # print('wire2',line_drawer(wire2))
 
 # print('patrickhereonthebase',ww1)
 # print('i want a brandnewhous',line_drawer(wire1))
 
-def step_removal(inlist):
-    outlist = []
-    for el in line_drawer(inlist):
-        outlist.append(el[:-1])
-    return outlist
+# def step_removal(inlist):
+#     outlist = []
+#     for el in line_drawer(inlist):
+#         outlist.append(el[:-1])
+#     return outlist
 
 # print(step_removal(wire1))
 # print(step_removal(wire2))
 
 # print('orange',set(step_removal(wire1)) & set(step_removal(wire2)))
-sun=set(step_removal(wire1)) & set(step_removal(wire2))
-
-
-print('SET',set(line_drawer(wire1)) & set(line_drawer(wire2)))
+# sun=set(step_removal(wire1)) & set(step_removal(wire2))
+#
+#
+# print('SET',set(line_drawer(wire1)) & set(line_drawer(wire2)))
 # def manhattan():
 #     crosses=[]
 #     for i in range( min(len(wire1), len(wire2))):
