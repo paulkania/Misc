@@ -1,0 +1,7 @@
+def flattener(ilist):
+    o=[]
+    for i in ilist:
+        j= " ".join(i) #join replaces commas with " " j = i.replace(',',' ') DOES not work, i believe replace only works within a string, rather than between strings. #str.replace == str.split().join()
+        # print(j)
+        o.append(j)
+    return o
