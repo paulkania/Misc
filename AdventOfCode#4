@@ -1,0 +1,32 @@
+# a='hello'
+# for i in a:
+#     if i=='e':
+#         print('1')
+#     elif i=='e':
+#         print('2')
+
+# input_range= (156218,652528)
+
+allpw=[]
+for i in range(15,27):
+    allpw.append(str(i))
+
+
+allpwtup=[]
+for psw in allpw:
+    pass_t=tuple(psw)#,type(psw))
+    allpwtup.append(pass_t)
+
+print(allpwtup)
+
+exclusive=[]
+tempdig=0
+for i in allpwtup:
+    print()
+    for el in i:
+        iel=int(el)
+        if iel >= tempdig:
+            iel=tempdig
+            exclusive.append(iel)
+        # print (el,type(el))
+print(exclusive)
