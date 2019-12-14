@@ -1,32 +1,44 @@
-# a='hello'
-# for i in a:
-#     if i=='e':
-#         print('1')
-#     elif i=='e':
-#         print('2')
 
-# input_range= (156218,652528)
+####156218-652527
+minrange, maxrange = 156218,652527
 
 allpw=[]
-for i in range(15,27):
+for i in range(minrange,maxrange+1):
     allpw.append(str(i))
 
 
-allpwtup=[]
-for psw in allpw:
-    pass_t=tuple(psw)#,type(psw))
-    allpwtup.append(pass_t)
+#IAMLEGEND
+#pword - string of the pwd
+#el - naive number counter 0,1 for 2 digit numbers, 0,1,2,3,4 for 5 dig num
+#curr_dig - single digit, integer
 
-print(allpwtup)
 
-exclusive=[]
-tempdig=0
-for i in allpwtup:
-    print()
-    for el in i:
-        iel=int(el)
-        if iel >= tempdig:
-            iel=tempdig
-            exclusive.append(iel)
-        # print (el,type(el))
-print(exclusive)
+ans=[]
+for pword in allpw:
+    lowest_dig = 0
+    prev_dig = 0
+    count = 0
+    # print()
+    for el in range(len(str(maxrange))):
+        # print(el)
+        curr_dig = int(pword[el])
+        # print(curr_dig,'young drifting light',lowest_dig)
+        if el>0:
+            prev_dig = int(pword[el-1])
+            # print('puurrrr',pword,curr_dig,prev_dig)
+        if curr_dig >= lowest_dig:
+            lowest_dig = curr_dig
+            # print(curr_dig, 'post', lowest_dig)
+        if lowest_dig > curr_dig:
+            # print(pword,lowest_dig,curr_dig)
+            break
+        if curr_dig == prev_dig:
+            count +=1
+        if el == len(str(maxrange))-1 and count >0:
+            ans.append(pword)
+
+# print(allpw)
+print(ans)
+print(len(ans))
+
+# for pword in possibilities:
