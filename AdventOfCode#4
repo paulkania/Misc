@@ -1,5 +1,13 @@
-
+import re
 ####156218-652527
+#So after trying regex for a while, thinking regex must be the correct solution, I peaked
+#on reddit, and i saw mention of the mathematical insight, that due to the increase constraint
+#and that i pretty much saw the answer beam into my mind
+#from https://www.reddit.com/r/adventofcode/comments/e5y3gq/2019_day_4_which_of_these_two_topics_were_the_key/
+#/u/j218 comment on using a hashmap and collecting the instances of the value occurence.
+#i guess i was wrong thinking about regex...but at least im not obsessed with the same
+#newly learnt tools, like i used to be quite a bit.
+# i also tried some clever(ish) setting(intersection, diff)with my regex attempts.
 minrange, maxrange = 156218,652527
 
 allpw=[]
@@ -17,14 +25,12 @@ ans=[]
 for pword in allpw:
     lowest_dig = 0
     prev_dig = 0
-    count = 0
+    count = 1
     # print()
     for el in range(len(str(maxrange))):
         # print(el)
         curr_dig = int(pword[el])
-        # print(curr_dig,'young drifting light',lowest_dig)
-        if el>0:
-            prev_dig = int(pword[el-1])
+        prev_dig = int(pword[el-1])
             # print('puurrrr',pword,curr_dig,prev_dig)
         if curr_dig >= lowest_dig:
             lowest_dig = curr_dig
@@ -34,11 +40,41 @@ for pword in allpw:
             break
         if curr_dig == prev_dig:
             count +=1
-        if el == len(str(maxrange))-1 and count >0:
+        if el == len(str(maxrange))-1 and count >1:
             ans.append(pword)
 
-# print(allpw)
-print(ans)
-print(len(ans))
+# print(ans)
+mans=[]
+for word in ans:
+    myd = {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0}
+    for ind in range(6):
+        myd[word[ind]]+=1
+    if 2 in myd.values():
+        mans.append(word)
 
-# for pword in possibilities:
+print(len(mans),mans)
+
+# pattern= r'[1]{2}|[2]{2}|[3]{2}|[4]{2}|[5]{2}|[6]{2}|[7]{2}|[8]{2}|[9]{2}'
+# pattern= r'[1]{3,}|[2]{3,}|[3]{3,}|[4]{3,}|[5]{3,}|[6]{3,}|[7]{3,}|[8]{3,}|[9]{3,}'
+# pattern= r'[1]{2,}|[2]{2,}|[3]{2,}|[4]{2,}|[5]{2,}|[6]{2,}|[7]{2,}|[8]{2,}|[9]{2,}'
+#(11(?!2-9))
+# pattern = r'1{3}(?!\d)|2{3}(?!\d)|3{3}(?!\d)|4{3}(?!\d)|5{3}(?!\d)|6{3}(?!\d)|7{3}(?!\d)|8{3}(?!\d)|9{3}(?!\d)'
+# rans=[]
+# for word in ans:
+#     result = re.search(pattern, word)
+#     if result:
+#         rans.append(word)
+#         # print(word)
+# print(len(rans),rans)
+
+# sans=set(ans)
+# srans=set(rans)
+# inter= sans.intersection(srans)
+# print('inter',len(inter),inter)
+# diff=sans.difference(srans)
+# print('cooll',len(diff),diff)
+# print('look!',sorted(diff))
+# print(len(ans),ans)
+# print(len(rans),rans)
+# print(set(set(ans) & set(rans)))
+#& line_drawer(wire2).keys()):
