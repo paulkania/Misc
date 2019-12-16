@@ -1,0 +1,201 @@
+// strokes.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#define OLC_PGE_APPLICATION
+#include <iostream>
+#include <vector> 
+#include "olcPixelGameEngine.h"
+//#include 
+using namespace std; //included with vector to use shortform naming
+const int SHEIGHT = 400; //globals be CAPPED so u know they globals.
+const int SWIDTH = 400;
+const int PIXSIZE = 1;
+const float acceleration = 2;
+
+struct Ball //public class, define this class with properties (pos, rad, vel)
+{
+	float x;
+	float y;
+	float vx;
+	float vy;
+	int r;
+	olc::Pixel color;
+
+	Ball() {} //default constructor...if you have a non default constructor, and you want to use the default constructor
+					//again, then this line im commenting on will let you do that.
+
+	//constructor 1 - only constructor, i removed other constructors because only 1 is necessary
+	Ball(int xx, int yy,  int vxx, int vyy, int rr, olc::Pixel cc)
+	{
+		x = xx;
+		y = yy;
+		vy = vyy;
+		vx = vxx;
+		r = rr;
+		color = cc;
+	}
+	
+
+	void Update() {} //down the line migrate code here, so that onUserUpdate() doesnt become a mess of a function. 
+	
+	void Draw(olc::PixelGameEngine* scr) //void returns nothing, Draw is function [we named] that uses FillCircle, 
+												//from olc, but since this struct is outside
+												//of the olc score, we have to include (olc::p											//& *scr is a pointer so you can refer
+	{
+		scr->FillCircle(x, y, r, color);
+	}
+
+
+};
+
+
+
+class ourgame : public olc::PixelGameEngine // most things happen in this class (except struct definition)
+{
+	vector<Ball> vecballs; //list of type balls, named vecballs
+	float time;
+	olc::Pixel opening_color = olc::Pixel(rand() % 255, rand() % 255, rand() % 255);
+	int mx;
+	int my;
+	int m_init_x;
+	int m_init_y;
+	int m_fin_x;
+	int m_fin_y;
+	int magnitude;
+	int angle;
+	float dist;
+	int ballcount;
+	Ball* selectedball = nullptr;
+
+	bool OnUserCreate() //
+	{
+		Ball ball1(30,40,40,200,20, olc::Pixel(olc::BLUE));
+		Ball ball2(200,25,0,100,37,olc::Pixel(olc::VERY_DARK_GREEN));
+		Ball ball3(100,40,90,0,10,olc::Pixel(olc::YELLOW));
+		Ball ball4(300,300,200,100,10,olc::Pixel(olc::YELLOW));
+
+		vecballs.push_back(ball1);
+		vecballs.push_back(ball2);
+		vecballs.push_back(ball3);
+		vecballs.push_back(ball4);
+
+		return true;
+	}
+
+
+
+	bool OnUserUpdate(float fElapsedTime) //  update is 1:1 with  frame
+	{
+		
+		
+		Clear(olc::DARK_GREY);
+		mx = GetMouseX();
+		my = GetMouseY();
+
+		if (selectedball != nullptr) {
+			selectedball->x = mx; //less explicit than = GetMouseX() but less overhead (calling fn less # times)
+			selectedball->y = my;
+		}
+		
+		//non-exlusive for loop
+		for (auto& ball_element : vecballs) {
+			ball_element.y = ball_element.y + (ball_element.vy*fElapsedTime);
+			ball_element.vy = ball_element.vy+(400*fElapsedTime);	//gives deceleration ddue to gravity.	
+			//if x-velocity is not 0
+			if (ball_element.vx != 0) {
+				ball_element.x = ball_element.x + (ball_element.vx*fElapsedTime);
+			}
+			//if ball is below window
+			if (ball_element.y + ball_element.r > SHEIGHT) {
+				ball_element.y = SHEIGHT - ball_element.r; 
+				ball_element.vy = -0.9*ball_element.vy; //gives energy loss on bounce
+			}
+			//if ball is right of window
+			if (ball_element.x + ball_element.r > SWIDTH) {
+				ball_element.x = SWIDTH - ball_element.r; //0;
+				ball_element.vx = -ball_element.vx; //0;
+			}
+			//if ball is above window
+			if (ball_element.y - ball_element.r < 0) {
+				ball_element.y = ball_element.r; //0;
+				ball_element.vy = -ball_element.vy; //0;
+			}
+			//if ball is left of window
+			if (ball_element.x - ball_element.r < 0) {
+				ball_element.x = ball_element.r; //0;
+				ball_element.vx = -ball_element.vx; //0;
+			}
+		}
+
+	
+		//if A-Pressed For loop
+		if (GetKey(olc::Key::A).bPressed) {
+			
+				for (auto& ball_element : vecballs) {
+					dist = sqrt((int)(pow((ball_element.x - mx), 2) + (int)(pow((ball_element.y - my), 2))));
+					if (dist < ball_element.r) {
+						selectedball = &ball_element;
+					}
+				}
+		}
+
+		if (GetKey(olc::Key::A).bReleased) {
+			if (selectedball != nullptr) {
+			selectedball->vy = 0;
+			selectedball->vx = 0;
+			}
+			selectedball = nullptr;
+		}
+		
+		//Triple - If LeftMouse Statements
+		if (GetMouse(0).bPressed) {
+			opening_color = olc::Pixel(0, rand() % 255, rand() % 255);
+			m_init_x = mx; //GetMouseX();
+			m_init_y = my;
+			time = 0;
+		}
+		if (GetMouse(0).bHeld) {
+			FillCircle(GetMouseX(), GetMouseY(), 5+pow(5, time),opening_color);
+			time += fElapsedTime;
+		}
+		if (GetMouse(0).bReleased) {
+			Ball ball_temp;
+			ball_temp.r = 5.1+pow(5,time);
+			ball_temp.color = opening_color;
+			ball_temp.x = mx;
+			ball_temp.y = my;
+			m_fin_x = mx;
+			m_fin_y = my;
+			magnitude = sqrt((int)pow((m_fin_x - m_init_x), 2) + (int)pow((m_fin_y - m_init_y), 2));
+			angle = atan((m_fin_y - m_init_y) / (m_fin_x - m_init_x));
+			ball_temp.vx = magnitude * cos(angle);
+			ball_temp.vy = magnitude * sin(angle);
+
+			//ball_temp.vx = -200+rand()%400; //this gives range -200 to +200
+			//ball_temp.vy = -20+rand()%40;
+			vecballs.push_back(ball_temp);
+			cout << ball_temp.x<< "  " << ball_temp.y << "       ";
+		}
+
+
+		for (int i = 0; i < vecballs.size(); i++) {
+			vecballs[i].Draw(this);
+		}
+
+		if (selectedball != nullptr) {
+			selectedball->Draw(this); //still not clear. this refers to the ourgame instance?
+		}		
+		return true;
+	}
+};
+
+int main() {
+	ourgame instance;
+
+
+	if (instance.Construct(SHEIGHT, SWIDTH, PIXSIZE, PIXSIZE)) {
+		{
+			instance.Start();
+		}
+		return 0;
+	}
+}
