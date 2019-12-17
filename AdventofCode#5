@@ -14,18 +14,22 @@ intcode = [int(i) for i in intcode]
 # print(intcode[68:99])
 # print(intcode[120:150])
 # print(intcode[126:133])
-jump=2
-for i in range(0,len(intcode),jump):
-    
-    # print(intcode[104:112])
+i=0
+while True:
     scode=str(intcode[i])
     icode = intcode[i]
-    if intcode[i+2] in range(3,5) or intcode[i+2] == 104:
-        jump=2
-    elif intcode[i+2] in range(1,3) or icode in range(101,103) or icode in range(1001,1003) or icode in range(1101,1103) :
-        jump=4
+    # if i>66: #52
+        # print(i,icode,intcode[i+1],intcode[i+2],intcode[i+3])
+        # print(intcode[223:226])
+        # print(intcode[217],intcode[87])
+    if icode ==99:
+        break
+    # if intcode[i+2] in range(3,5) or intcode[i+2] == 104:
+    #     jump=2
+    # elif intcode[i+2] in range(1,3) or icode in range(101,103) or icode in range(1001,1003) or icode in range(1101,1103) :
+    #     jump=4
 
-    if  jump==4 and i%2 ==0 and(icode in range(1,3) or icode in range(101,103) or icode in range(1001,1003) or icode in range(1101,1103)) :
+    if i%2 ==0 and(icode in range(1,3) or icode in range(101,103) or icode in range(1001,1003) or icode in range(1101,1103)) :
         # print(i,icode,jump)
         # print('a',i,icode)
         a=intcode[i+1]
@@ -38,17 +42,12 @@ for i in range(0,len(intcode),jump):
                 print('ans',104,i,intcode[i+1])
 
         if icode == 1:
-            try:
-                intcode.insert(c,intcode[a]+intcode[b])
-                del (intcode[c + 1])
-            except Exception as e:
-                continue
+            intcode.insert(c,intcode[a]+intcode[b])
+            del (intcode[c + 1])
+
         if icode == 2:
-            try:
-                intcode.insert(c,intcode[a]+intcode[b])
-                del (intcode[c + 1])
-            except Exception as e:
-                continue
+            intcode.insert(c,intcode[a]*intcode[b])
+            del (intcode[c + 1])
         if icode in range (1101,1103):
             a=intcode[i+1]
             b=intcode[i+2]
@@ -82,8 +81,8 @@ for i in range(0,len(intcode),jump):
             if scode[-1] == '2':
                 intcode.insert(c,a*intcode[b])
                 del (intcode[c + 1])
-
-    elif jump==2 and (icode in range(3,5) or icode == 104):
+        i+=4
+    elif i%2==0 and (icode in range(3,5) or icode == 104):
 
 
         # print('b',i,icode)
@@ -139,6 +138,9 @@ for i in range(0,len(intcode),jump):
             if scode[-1] == '2':
                 intcode.insert(c,a*intcode[b])
                 del (intcode[c + 1])
+        i+=2
+
+print('end')
     # print(i, intcode[223:226],intcode[136],intcode[139])
 
         # print('eol',intcode[222:225],intcode[24:47])
