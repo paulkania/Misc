@@ -1,0 +1,166 @@
+#README -
+import os
+# os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
+os.chdir(r"C:\Users\prozehnal\Desktop\csv_house\python") #desktop
+ #changes to correct directory from absolute reference
+# print(os.getcwd(),'<--current directory') #prints current directory to ensure you're in the right folder
+# print(os.listdir(os.getcwd()),'<----files in current dir')
+with open('aoc5.txt','r') as f:
+    intcode = f.read() #readlines() will give it as a list, but i only need a string rn.
+intcode= intcode.split(',')
+intcode = [int(i) for i in intcode]
+
+
+# print(intcode[68:99])
+# print(intcode[120:150])
+# print(intcode[126:133])
+jump=2
+for i in range(0,len(intcode),jump):
+    
+    # print(intcode[104:112])
+    scode=str(intcode[i])
+    icode = intcode[i]
+    if intcode[i+2] in range(3,5) or intcode[i+2] == 104:
+        jump=2
+    elif intcode[i+2] in range(1,3) or icode in range(101,103) or icode in range(1001,1003) or icode in range(1101,1103) :
+        jump=4
+
+    if  jump==4 and i%2 ==0 and(icode in range(1,3) or icode in range(101,103) or icode in range(1001,1003) or icode in range(1101,1103)) :
+        # print(i,icode,jump)
+        # print('a',i,icode)
+        a=intcode[i+1]
+        b=intcode[i+2]
+        c=intcode[i+3]
+        if scode[-1] == '4': #if scode == 4
+            if icode == 4:
+                print('ans',4,i,intcode[intcode[i+1]])
+            if icode ==104:           # scode==104
+                print('ans',104,i,intcode[i+1])
+
+        if icode == 1:
+            try:
+                intcode.insert(c,intcode[a]+intcode[b])
+                del (intcode[c + 1])
+            except Exception as e:
+                continue
+        if icode == 2:
+            try:
+                intcode.insert(c,intcode[a]+intcode[b])
+                del (intcode[c + 1])
+            except Exception as e:
+                continue
+        if icode in range (1101,1103):
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            # print('thousands',i,icode,a,b,c)
+            if scode[-1] == '1':
+                intcode.insert(c,a+b)
+                del (intcode[c + 1])
+            if scode[-1] == '2':
+                intcode.insert(c,a*b)
+                del (intcode[c + 1])
+        if icode in range (1001,1003):
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            # print('thousands',i,icode,a,b,c)
+            if scode[-1] == '1':
+                intcode.insert(c,intcode[a]+b)
+                del (intcode[c + 1])
+            if scode[-1] == '2':
+                intcode.insert(c,intcode[a]*b)
+                del (intcode[c + 1])
+        if icode in range (101,103):
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            # print('hundreds',i,icode,a,b,c)
+            if scode[-1] == '1':
+                intcode.insert(c,a+intcode[b])
+                del (intcode[c + 1])
+            if scode[-1] == '2':
+                intcode.insert(c,a*intcode[b])
+                del (intcode[c + 1])
+
+    elif jump==2 and (icode in range(3,5) or icode == 104):
+
+
+        # print('b',i,icode)
+        a=intcode[i+1]
+        b=intcode[i+2]
+        c=intcode[i+3]
+        if scode[-1] == '4': #if scode == 4
+            if icode == 4:
+                print(4,i,intcode[intcode[i+1]])
+            if icode ==104:           # scode==104
+                print(104,i,intcode[i+1])
+
+        if icode == 1:
+            intcode.insert(c,intcode[a]+intcode[b])
+            del (intcode[c + 1])
+        if icode == 2:
+            intcode.insert(c,intcode[a]+intcode[b])
+            del (intcode[c + 1])
+        if icode == 3:
+            intcode.insert(a,1) #naively insert digit 1 at position a.
+            del (intcode[a+1])
+            # print(intcode[0:10])
+        if icode in range (1101,1103):
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            # print('thousands',i,icode,a,b,c)
+            if scode[-1] == '1':
+                intcode.insert(c,a+b)
+                del (intcode[c + 1])
+            if scode[-1] == '2':
+                intcode.insert(c,a*b)
+                del (intcode[c + 1])
+        if icode in range (1001,1003):
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            # print('thousands',i,icode,a,b,c)
+            if scode[-1] == '1':
+                intcode.insert(c,intcode[a]+b)
+                del (intcode[c + 1])
+            if scode[-1] == '2':
+                intcode.insert(c,intcode[a]*b)
+                del (intcode[c + 1])
+        if icode in range (101,103):
+            a=intcode[i+1]
+            b=intcode[i+2]
+            c=intcode[i+3]
+            # print('hundreds',i,icode,a,b,c)
+            if scode[-1] == '1':
+                intcode.insert(c,a+intcode[b])
+                del (intcode[c + 1])
+            if scode[-1] == '2':
+                intcode.insert(c,a*intcode[b])
+                del (intcode[c + 1])
+    # print(i, intcode[223:226],intcode[136],intcode[139])
+
+        # print('eol',intcode[222:225],intcode[24:47])
+# print(intcode[0:39])
+# print(intcode[166],intcode[139],intcode[224])
+    # if icode in range(101,104):
+        # print(i,icode)
+        # if scode[0] ==1:
+            # a = intcode[intcode[i+1]]
+#
+        # b = intcode[i + 2]
+        # c = intcode[i + 3]
+        # intcode.insert(c, (intcode[a] + intcode[b]))
+        # del (intcode[c + 1])
+
+            # if icode ==1:
+            #     a = intcode[i + 1]
+            #     b = intcode[i + 2]
+            #     c = intcode[i + 3]
+            #     print('here', i, a, b, c)
+            #     intcode.insert(c, (intcode[a] + intcode[b]))  # my inserting and addition is naive, its adding the values, not the pointers to the other values.
+            #     del (intcode[c + 1])
+            #     print('mark', intcode, i)
+
+# print(intcode)
