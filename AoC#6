@@ -1,0 +1,63 @@
+#README -
+#the 99 stops the program from running, but the answer is found anyways...the top infinite loop just continues.
+import os
+os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
+# os.chdir(r"C:\Users\prozehnal\Desktop\csv_house\python") #desktop
+
+# print(os.getcwd(),'<--current directory') #prints current directory to ensure you're in the right folder
+# print(os.listdir(os.getcwd()),'<----files in current dir')
+with open('aoc6t.txt','r') as f:
+    pd = f.read() #readlines() will give it as a list, but i only need a string rn.
+pd=pd.split('\n')
+pd = [el.split(')') for el in pd]
+pd = [tuple(el) for el in pd]
+orbiter='COM'
+c=0
+loop=0
+# print(pd)
+traceback=['COM']
+print(orbiter,pd,len(pd))
+while pd: #while pd not empty
+    print('does this happen in?//top')
+    c+=1
+    if c==14: #auto break
+        print('finalfinal breaking')
+        break #autobr  a
+    loop=0
+    for item in pd:
+        loop+=1
+        if item[0] == orbiter:
+            orbiter=item[1]
+            pd.remove(item)
+            traceback.append(item[1])
+            print('mainbody',loop,pd,orbiter,traceback)
+            break# continue
+        print('ee')
+    if loop == len(pd):
+        print('a')
+        continue
+    print('f')
+    print('in what order',loop,orbiter,traceback,pd)
+    # orbiter = traceback[0]
+    # del traceback[0]
+    # orbiter = traceback[0]
+    # del traceback[0]
+    print(333333333,pd,orbiter,traceback)
+
+    # if pd:
+    #     print('asnfunf',traceback[0])
+    #     orbiter = traceback[0]
+
+print(traceback)
+
+# while True:
+#
+#     if pd[i][0] == orbiter:
+#         del pd[i] #eliminates index problem of finding first instance in a fork
+#         print('access')
+#         orbiter= pd[i][1]
+#         c+=1
+#
+#
+# for i in range(len(pd)):
+#     print(pd[i][1])
