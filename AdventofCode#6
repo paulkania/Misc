@@ -1,0 +1,35 @@
+order = [('COM', 'B'), ('B', 'G'), ('G', 'H'), ('B', 'C'), ('C', 'D'), ('D', 'I'), ('D', 'E'), ('E', 'J'), ('J', 'K'), ('K', 'L'), ('E', 'F')]
+
+i,j=0,1
+ans=[]
+reached= [('COM','B')]
+loopsmade=0
+while True:
+    print('top    ',len(reached), order[i][1], order[j][0],'     ',i,j,'     ',ans,reached)
+    loopsmade +=1
+    i= len(reached)
+    j= len(reached)+1
+    if loopsmade==15:
+        break
+
+    if order[i][1] == order[j][0]:
+        print('equals')
+        ans.append(j)
+        reached.append(order[j]) #probably Δ to lenreached
+
+        print('5starhotel',order[i][1],order[j][0],ans,reached)
+        continue
+    if order[i][1] != order[j][0]:
+        print('no pair',order[i][1], order[j][0],reached[-1])
+        if reached[-1][0] == order[j][0]:
+            print('0passspot', reached[-1],i,order[i],order[j],reached[-1])
+            del reached[-1]
+            print('1passpot', reached[-1],order[i], order[j])
+
+            pass
+        if reached[-1][0] != order[j][0]:
+            print('0delspot',reached)
+            reached = reached[0:len(reached)-1]
+            print('1delspot',reached)
+
+    print()
