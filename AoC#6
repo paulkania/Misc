@@ -1,3 +1,9 @@
+#part 1, only start looking from initial traceback success value. use a success boolean
+#part 2 - use traceback var as well? it's got handy info
+
+
+
+
 import os
 os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
 # os.chdir(r"C:\Users\prozehnal\Desktop\csv_house\python") #desktop
@@ -5,7 +11,7 @@ os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
 # print(os.getcwd(),'<--current directory') #prints current directory to ensure you're in the right folder
 # print(os.listdir(os.getcwd()),'<----files in current dir')
 with open('aoc6t.txt','r') as f:
-    pd = f.read() #readlines() will give it as a list, but i only need a string rn.
+    pd = f.read() #readlines() will give it as i list, but i only need i string rn.
 pd=pd.split('\n')
 pd = [el.split(')') for el in pd]
 pd = [tuple(el) for el in pd]
@@ -16,57 +22,71 @@ orbiter='COM' #mpregnate
 traceback=['COM'] #COM impregnate not strictly necessary
 t , order =0 , [] #initialize
 while pd:
-    b = True
+    j = True
     for item in pd:
         if item[0] == orbiter:
-            b = False
+            j = False
             orbiter=item[1]
             pd.remove(item)
             order.append(item)
             traceback.append(item[1])
             break
-    if b == True:
+    if j == True:
         orbiter = traceback[t]
         t+=1
 
-print(order)
 
 
 ####post orderring ....pre-answering
-###try a for i,j in (0,rangelen) , (1,rangelen-1)
+###try i for i,j in (0,rangelen) , (1,rangelen-1)
 
-xy=0
-for place, i in enumerate(order):
-    print(place+1,i,i[0],i[1])
-    xy+=(place+1)
+# xy=0
+# for place, i in enumerate(order):
+#     print(place+1,i,i[0],i[1])
+#     xy+=(place+1)
+#
+# print(xy)
+# print()
+# print()
 
-print(xy)
-print()
-print()
+# print(order)
 
-# i=0
-# j=1
-# c=0
-# ans=[]
-# while True:
-#     # c+=1
-#     # if c==6:
-#     #     break
-#     # print(order[i],order[j],i,j)
-#     # print(order[j][0],order[i][1])
-#     if order[j][0] ==order[i][1]:
-#         ans.append(j)
-#         # print(order[i],ans)
-#     if order[j][0] != order[i][1]:
-#         print(order[j][0],order[i][1])
-#         for t in order:
-#             print(t)
-#             if t[1] == order[j][0]:
-#                 ans.append(i)
-#                 print(t,order[j][0])
-#     i+=1
-#     j+=1
+print(order)
 
+#dec 19 morn
+i,j=0,1
+ans=[]
+reached= ['COM','B']
+loopsmade=0
+while True:
+    print('top    ',order[i][1], order[j][0],'     ',i,j,'     ',ans,reached)
+    loopsmade +=1
+    if loopsmade==5:
+        break
+
+    if order[i][1] == order[j][0]:
+        ans.append(j)
+        reached.append(order[j])
+        i+=1
+        j+=1
+        print('5starhotel',order[i][1],order[j][0],ans,reached)
+        continue
+    if order[i][1] != order[j][0]:
+        print('no pair')
+        if reached[-1][0] == order[j][0]:
+            print('passspot', reached[-1], order)
+            del order[i]
+            print('delspot', reached[-1], order[j])
+            print(reached)
+            print(order,order[j],order[i])
+            pass
+        if reached[-1][0] != order[j][0]:
+            print('delspot')
+            del reached[-1]
+            j=len(reached)-1
+            i=len(reached)
+
+    print()
 # print(ans)
 #
 # for i in order:
@@ -76,7 +96,7 @@ print()
 # while True:
 #
 #     if pd[i][0] == orbiter:
-#         del pd[i] #eliminates index problem of finding first instance in a fork
+#         del pd[i] #eliminates index problem of finding first instance in i fork
 #         print('access')
 #         orbiter= pd[i][1]
 #         c+=1
