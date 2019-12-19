@@ -1,5 +1,3 @@
-#README -
-#the 99 stops the program from running, but the answer is found anyways...the top infinite loop just continues.
 import os
 os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
 # os.chdir(r"C:\Users\prozehnal\Desktop\csv_house\python") #desktop
@@ -11,20 +9,13 @@ with open('aoc6t.txt','r') as f:
 pd=pd.split('\n')
 pd = [el.split(')') for el in pd]
 pd = [tuple(el) for el in pd]
-orbiter='COM'
-c=0
-loop=0
-# print(pd)
-traceback=['COM']
-print(orbiter,pd,len(pd))
-t=0
-order=[]
-while pd: #while pd not empty
-    print('top')
-    c+=1
-    if c==10: #auto break
-        print('finalfinal breaking')
-        break #autobr  a
+
+
+
+orbiter='COM' #mpregnate
+traceback=['COM'] #COM impregnate not strictly necessary
+t , order =0 , [] #initialize
+while pd:
     b = True
     for item in pd:
         if item[0] == orbiter:
@@ -33,19 +24,55 @@ while pd: #while pd not empty
             pd.remove(item)
             order.append(item)
             traceback.append(item[1])
-            print('mainbody',pd,orbiter,traceback)
-            c=0
-            t=0
-            break# continue
+            break
     if b == True:
         orbiter = traceback[t]
         t+=1
-        print(b,orbiter,traceback)
+
+print(order)
 
 
-print('loop over',pd,traceback)
+####post orderring ....pre-answering
+###try a for i,j in (0,rangelen) , (1,rangelen-1)
+
+xy=0
+for place, i in enumerate(order):
+    print(place+1,i,i[0],i[1])
+    xy+=(place+1)
+
+print(xy)
 print()
-print(len(order))
+print()
+
+# i=0
+# j=1
+# c=0
+# ans=[]
+# while True:
+#     # c+=1
+#     # if c==6:
+#     #     break
+#     # print(order[i],order[j],i,j)
+#     # print(order[j][0],order[i][1])
+#     if order[j][0] ==order[i][1]:
+#         ans.append(j)
+#         # print(order[i],ans)
+#     if order[j][0] != order[i][1]:
+#         print(order[j][0],order[i][1])
+#         for t in order:
+#             print(t)
+#             if t[1] == order[j][0]:
+#                 ans.append(i)
+#                 print(t,order[j][0])
+#     i+=1
+#     j+=1
+
+# print(ans)
+#
+# for i in order:
+#     print (i)
+
+
 # while True:
 #
 #     if pd[i][0] == orbiter:
