@@ -17,39 +17,35 @@ loop=0
 # print(pd)
 traceback=['COM']
 print(orbiter,pd,len(pd))
+t=0
+order=[]
 while pd: #while pd not empty
-    print('does this happen in?//top')
+    print('top')
     c+=1
-    if c==14: #auto break
+    if c==10: #auto break
         print('finalfinal breaking')
         break #autobr  a
-    loop=0
+    b = True
     for item in pd:
-        loop+=1
         if item[0] == orbiter:
+            b = False
             orbiter=item[1]
             pd.remove(item)
+            order.append(item)
             traceback.append(item[1])
-            print('mainbody',loop,pd,orbiter,traceback)
+            print('mainbody',pd,orbiter,traceback)
+            c=0
+            t=0
             break# continue
-        print('ee')
-    if loop == len(pd):
-        print('a')
-        continue
-    print('f')
-    print('in what order',loop,orbiter,traceback,pd)
-    # orbiter = traceback[0]
-    # del traceback[0]
-    # orbiter = traceback[0]
-    # del traceback[0]
-    print(333333333,pd,orbiter,traceback)
+    if b == True:
+        orbiter = traceback[t]
+        t+=1
+        print(b,orbiter,traceback)
 
-    # if pd:
-    #     print('asnfunf',traceback[0])
-    #     orbiter = traceback[0]
 
-print(traceback)
-
+print('loop over',pd,traceback)
+print()
+print(len(order))
 # while True:
 #
 #     if pd[i][0] == orbiter:
