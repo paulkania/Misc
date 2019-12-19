@@ -1,0 +1,38 @@
+import itertools as itl
+S = 'HACK 2'
+k=2
+
+def hasnum(s):
+    return any(i.isdigit() for i in s)
+
+ans=[]
+for k in range(1,k+1):
+    print(k)
+    A=list(itl.combinations(S,k))
+    # A=''.join(A)
+    print(A)
+    for i in A:
+        print('iiiii',i)
+        i=''.join(i)
+        print('ib',i)
+
+        if i.isupper():
+            for el in range(0,k-1):
+                print(5345345,i[el])
+
+print(ans)
+
+            # for s in S:
+    #     s=''.join(s)
+    #     print('232',s)
+
+# for i in B:
+#     if i[0].isupper() and i[1].isupper():
+#             i=''.join(i)
+#             print(i)
+#             AN.append(i)
+#
+# for i in A:
+#     if i[0].isupper():
+#         i=''.join(i)
+#         AN.append(i)
