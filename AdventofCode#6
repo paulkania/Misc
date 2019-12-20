@@ -1,35 +1,53 @@
-order = [('COM', 'B'), ('B', 'G'), ('G', 'H'), ('B', 'C'), ('C', 'D'), ('D', 'I'), ('D', 'E'), ('E', 'J'), ('J', 'K'), ('K', 'L'), ('E', 'F')]
+#part 1, only start looking from initial traceback success value. use a success boolean
+#part 2 - use traceback var as well? it's got handy info
+import pickle
+import os
+os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
+# os.chdir(r"C:\Users\prozehnal\Desktop\csv_house\python") #desktop
 
-i,j=0,1
-ans=[]
-reached= [('COM','B')]
-loopsmade=0
-while True:
-    print('top    ',len(reached), order[i][1], order[j][0],'     ',i,j,'     ',ans,reached)
-    loopsmade +=1
-    i= len(reached)
-    j= len(reached)+1
-    if loopsmade==15:
-        break
+# print(os.getcwd(),'<--current directory') #prints current directory to ensure you're in the right folder
+# print(os.listdir(os.getcwd()),'<----files in current dir')
+with open('aoc6t.txt','r') as f:
+    pd = f.read() #readlines() will give it as i list, but i only need i string rn.
+pd=pd.split('\n')
+pd = [el.split(')') for el in pd]
+pd = [tuple(el) for el in pd]
 
-    if order[i][1] == order[j][0]:
-        print('equals')
-        ans.append(j)
-        reached.append(order[j]) #probably Δ to lenreached
 
-        print('5starhotel',order[i][1],order[j][0],ans,reached)
-        continue
-    if order[i][1] != order[j][0]:
-        print('no pair',order[i][1], order[j][0],reached[-1])
-        if reached[-1][0] == order[j][0]:
-            print('0passspot', reached[-1],i,order[i],order[j],reached[-1])
-            del reached[-1]
-            print('1passpot', reached[-1],order[i], order[j])
+def orderer():
+    loops=0
+    orbiter='COM' #mpregnate
+    traceback=['COM'] #COM impregnate not strictly necessary
+    t , order =0 , [] #initialize
+    while pd:
 
-            pass
-        if reached[-1][0] != order[j][0]:
-            print('0delspot',reached)
-            reached = reached[0:len(reached)-1]
-            print('1delspot',reached)
+        loops+=1
+        # print('top',loops,pd)
+        j = True
+        for item in pd:
+            if item[0] == orbiter:
+                j = False
+                orbiter=item[1]
+                pd.remove(item)
+                order.append(item)
+                traceback.append(item[1])
+                # print(order)
+                break
+        if j == True:
+            # print(pd,orbiter,t,traceback)
+            orbiter = traceback[t]
+            t+=1
+    return order
 
-    print()
+print(orderer())
+
+def txtsaver(title,yourlist):
+    with open(title, mode="w", encoding="iso-8859-1") as file:
+        for i in yourlist:
+            file.write(i)
+def pickler(title,data):
+    with open(title, mode='wb') as picklefile:
+        pickle.dump(data, picklefile)
+def depickle(title):
+    with open (title, mode='rb') as fp:
+        return pickle.load(fp)
