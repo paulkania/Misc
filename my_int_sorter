@@ -1,0 +1,25 @@
+def mysorter():
+    l= [9,8,1,3,4,5]
+    loop=0
+    while True:
+        print('top',loop)
+        loop+=1
+        if loop == 10:
+            print(loop, 'reached')
+            return l
+
+        for i in range(len(l)):
+            print()
+            if i==0:
+                prev_el = l[i]
+                print(0,l,i)
+                continue
+            if l[i]<prev_el:
+                print('bottom',l[i],l,i)
+                temp=l[i]
+                l[i]=prev_el
+                l[i-1]=temp
+                continue
+            return l
+
+print(mysorter())
