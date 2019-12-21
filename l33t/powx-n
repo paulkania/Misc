@@ -1,0 +1,17 @@
+import functools as fn
+class Solution:
+    def my_power(self,x: float, n: int):
+        ans = []
+        if n>0:
+            for i in range(1, n+1):
+                ans.append(x)
+                a= float(fn.reduce(lambda z,y:z*y,ans))
+            return a
+        if n<0:
+            for i in range(1, abs(n) + 1):
+                ans.append(1/x)
+                a = float(fn.reduce(lambda z,y: z*y, ans))
+            return a
+        if n==0:
+            return float(1)
+print(Solution.my_power(2.0,20))
