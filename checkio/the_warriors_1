@@ -1,0 +1,40 @@
+class Warrior:
+    def __init__(self):
+        self.health = 50
+        self.attack = 5
+        self.alive = True
+
+    def death(self):
+        if self.health <=0:
+            self.alive = False
+            return True
+        return False
+
+class Knight(Warrior):
+    def __init__(self):
+        Warrior.__init__(self)
+        self.attack = 7
+
+def fight(p1,p2):
+    while not p1.death() and not p2.death():
+        print(p1.health,p2.health)
+        p2.health -= p1.attack
+        if p2.death():
+            return True
+        p1.health -= p2.attack
+        if p1.death():
+            return False
+
+
+w1=Warrior()
+w3=Knight()
+print(fight(w1,w3))
+
+#other ways to initialize a subclass
+#1. 
+def __init__(self):
+   super().__init__()
+   self.x
+#2. 
+def __init__(self):
+   super().__init__(7) #if attack is accepted as parameter in warrior class (which for me it was not)
