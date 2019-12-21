@@ -1,0 +1,95 @@
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+        self.previous = None
+
+    def has_value(self,value):
+        if self.data == value:
+            return True
+        return False
+
+class DLL:
+    def __init__(self):
+        # self.node = None
+        self.head = None
+        self.tail = None
+
+    def adder(self,node):
+        if isinstance(node,Node):
+            pass        #leave it to beaver (ie the next buncha lines)
+        else:
+            node = Node(node) #create a new node instance
+
+        if self.head is None: # == vs is
+            self.head=node
+            self.tail = node #you make the first node to exist both a head and a tail. fun.
+            node.next = None
+            node.tail = None
+        else:
+            self.tail.next = node
+            node.previous = self.tail
+        self.tail = node
+        return
+    def o_values(self):
+        current_node = self.head
+        while current_node is not None:
+            print(current_node.data,end=' ')
+            current_node = current_node.next
+        print()
+        return
+    def o_listlength(self):
+        count=0
+        current_node = self.head
+        while current_node is not None:
+            count+=1
+            current_node = current_node.next
+        print(count)
+        return
+    def unordered_search(self,value):
+        current_node = self.head
+        node_id=0
+        results=[]
+        while current_node is not None:
+            if current_node.has_value(value):
+                results.append(node_id)
+            current_node=current_node.next
+            node_id+=1
+        print(results)
+        return results
+    def remove_list_item_by_id(self, item_id):
+        current_id = 0
+        current_node = self.head
+        while current_node is not None:
+            previous_node = current_node.previous
+            next_node = current_node.next
+            if current_id == item_id:
+                # if this is the first node (head)
+                if previous_node is not None:
+                    previous_node.next = next_node
+                    if next_node is not None:
+                        next_node.previous = previous_node
+
+                else:
+                    self.head = next_node
+                    if next_node is not None: #if it is none, the list is totally empty.
+                        next_node.previous = None
+                return
+            # needed for the next iteration
+            current_node = next_node
+            current_id = current_id + 1
+
+        return
+
+n1=Node(5)
+n1=Node(5)
+mll=DLL()
+mll.adder(99)
+mll.adder('522')
+mll.adder(n1)
+mll.adder(99)
+mll.o_values()
+mll.o_listlength()
+mll.unordered_search('b')
+mll.remove_list_item_by_id(1)
+mll.o_values()
