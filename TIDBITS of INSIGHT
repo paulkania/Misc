@@ -3,6 +3,7 @@ dict={5:'welcome',4:'welcome',5:'welcome'}
 print(dict,type(dict))
 
 #we can see dict is a set...but a set with key and value pairs. neato! how neat is that! == pretty neat TRUE
+#i hope i never forget the lesson of reversing a dict if the values are all unique...aoc6.
 
 #--BREAK & Continue------- i used to know this, but somehow ive gotten stupider (no sleep?)
 
