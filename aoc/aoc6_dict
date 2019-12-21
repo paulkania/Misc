@@ -1,0 +1,18 @@
+import os
+os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
+
+lines = list(x.rstrip().split(")") for x in open("aoc6t.txt"))
+orbits = dict(reversed(x) for x in lines)
+cnt = 0
+print(orbits)
+l=0
+for obj in orbits.keys():
+  print(l)
+  l+=1
+  print('for',obj)
+  x = obj
+  while x in orbits: #only searches the key values, so COM will always be the root//dead end.
+    x = orbits[x]
+    cnt += 1
+    print('while',x,cnt)
+print(cnt)
