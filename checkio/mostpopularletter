@@ -1,0 +1,16 @@
+def mostpopularletter(text: str) -> str:
+    list_viable_entries = []
+    for el in text:
+        if el.isalpha():
+            list_viable_entries.append(el.lower()) #for each chr, if it's alpha, append the lowercase version of it
+    count = 0
+    letter = None #placeholder value
+    for el in list_viable_entries:
+        if list_viable_entries.count(el) > count or ((list_viable_entries.count(el) >= count and ord(el)<ord(letter))): #if it occurs more than the current leader, OR the same #of times + it's earlier in the alphabet
+            count = list_viable_entries.count(el)
+            letter = el
+    print(list_viable_entries)
+    print(count,letter)
+    return letter
+
+mostpopularletter('nagjn  and *&^hjn LL MM Zzsddweiubd ashubb djhew hb378he783heb cdb hgcvgsvsuibnjk hjBYHVYVTikbwbd ewoijolkxwopwjcuicbw')
