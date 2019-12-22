@@ -1,0 +1,57 @@
+#readme
+#valid: names --- remove with d= enchant.Dict("en_US") & d.check(word)
+#invalid - hyphenated words (before is.alpha() you could replace '-' w ''
+
+import os
+import enchant #decided against because it took removed names.
+import time
+import codecs
+
+st=time.time()
+os.chdir(r"C:\Users\HP\Desktop\coderun")
+d=enchant.Dict("en_US")
+# print(os.getcwd(),'<--current directory') #prints current directory to ensure you're in the right folder
+# print(os.listdir(os.getcwd()),'<----files in current dir')
+# print()
+#
+# with open('12w.txt','r', encoding='utf-8') as f:
+#     text = f.read() #readlines() will give it as i list, but i only need i string rn.
+# text=text.split()
+
+with codecs.open('12w.txt', 'r', 'utf8') as f:
+    text = f.read()  # readlines() will give it as i list, but i only need i string rn.
+text = text.split()
+
+lwords=[]
+for word in text:
+    if word.isalpha():
+        word = word.replace('.', '').replace('-','')
+        lwords.append(word.lower())
+
+d_words = {word: 0 for word in lwords}
+
+for word in lwords: #keep a seperate list and dict and compare like so.
+    if word in d_words:
+        d_words[word]+=1
+
+def frequency_min_max(minn=1,maxx=100000):
+    l_frequency=[]
+    for k,v in d_words.items():
+        if minn<=v<=maxx:# and v<300:
+            l_frequency.append((k,v))
+
+    return l_frequency
+
+print(frequency_min_max(68,70))
+
+sortedlist= sorted(frequency_min_max(), key=lambda t:t[1])
+print(sortedlist)
+# sorted_by_second = sorted(data, key=lambda tup: tup[1])
+
+
+# print(l_frequency)
+# print(lwords)
+
+et=time.time()
+print(et-st,'seconds')
+
