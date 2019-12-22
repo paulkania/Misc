@@ -1,0 +1,34 @@
+#gives number of consecutive sums and what they are.
+def consecutive_sum(target):
+    iter, sum,ans =0,0,0
+    real_answers=[]
+    while iter <= target:
+        iter+=1
+        sum=0
+        potential_answers = []
+        for i in range(iter,target+1):
+            sum = sum + i
+            potential_answers.append(i)
+            if sum > target:
+                break
+            if sum == target:
+                ans+=1
+                real_answers.append(potential_answers)
+
+    return ans, real_answers
+
+print(consecutive_sum(100))
+
+
+#####    &&&&&&&&&&&&&&&&       ####
+
+
+data=[1,10,10]
+def restrictive_adder(data):
+    if len(data) > 1:
+        data[0] = data[0] + data[1]
+        data.remove(data[1])
+        return restrictive_adder(data)
+    return data[0]
+
+print(restrictive_adder(data))
