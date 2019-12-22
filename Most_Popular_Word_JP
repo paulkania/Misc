@@ -18,7 +18,7 @@ d=enchant.Dict("en_US")
 #     text = f.read() #readlines() will give it as i list, but i only need i string rn.
 # text=text.split()
 
-with codecs.open('12w.txt', 'r', 'utf8') as f:
+with codecs.open('notw.txt', 'r', 'utf8') as f:
     text = f.read()  # readlines() will give it as i list, but i only need i string rn.
 text = text.split()
 
@@ -46,6 +46,12 @@ print(frequency_min_max(68,70))
 
 sortedlist= sorted(frequency_min_max(), key=lambda t:t[1])
 print(sortedlist)
+def searcher(string):
+    search = [item for item in sortedlist if item[0] == string]
+    print(search)
+    return search
+
+searcher('fright')
 # sorted_by_second = sorted(data, key=lambda tup: tup[1])
 
 
