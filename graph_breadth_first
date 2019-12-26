@@ -1,0 +1,62 @@
+def shitty_shuffler_list(alist):
+    shuffledlist = []
+    for i in range(len(alist)):
+        if i%3 ==0:
+            shuffledlist.append(alist[i])
+            continue
+        shuffledlist.insert(0,alist[i])
+    return shuffledlist
+datapairs = ['F-H','E-F','H-J','F-G','H-I','B-C','C-D','A-B','C-E']
+datapairs = [i.split('-') for i in datapairs]
+s1= shitty_shuffler_list(datapairs)
+s2= shitty_shuffler_list(s1)
+def dicter(listname):
+    dictname = {}
+    for i in listname:  # can change to s1 s2
+        dictname[i[1]] = i[0]
+    return dictname
+
+d1= dicter(datapairs) #try with
+d2 = dicter(s1) #all
+d3= dicter(s2) #3
+class Node:
+    def __init__(self,name):
+        self.name=name
+        self.root = True
+        self.children = []
+
+    # def __str__(self):
+    #     return str(self.name)
+    def __repr__(self):
+        a= [c.name for c in self.children]
+        return str(a)
+        
+    def printer(self):
+        for c in self.children:
+            print(c.name,end=" ")
+
+
+# print(d1)
+graph ={}
+for orr,oee in d1.items():
+    if orr not in graph:
+        graph[orr] = Node(orr)
+    if oee not in graph:
+        graph[oee] = Node(oee)
+    # print()
+    # print(graph[orr].printer())
+    # print(graph[oee].printer())
+    graph[orr].root=False
+    graph[oee].children.append((graph[orr]))
+
+childless =[]
+for k,v in graph.items():
+    if len(v.children)==0:
+        childless.append(k)
+
+# print(childless)
+# print(graph['J'].children)
+# # Node.printer((graph['A'].children))
+# Node.printer(graph['C'])
+print(graph)
+                                                                                            
