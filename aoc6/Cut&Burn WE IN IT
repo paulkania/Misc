@@ -1,0 +1,59 @@
+import os
+from collections import deque
+os.chdir(r"C:\Users\HP\Desktop\coderun") #laptop
+with open('aoc6t2.txt','r') as f:
+    pd = f.read() #readlines() will give it as i list, but i only need i string rn.
+pd=pd.split('\n')
+pd = [el.split(')') for el in pd]
+dpd ={}
+for i in pd:
+    dpd[i[1]]=i[0]
+
+class Node:
+    def __init__(self,name):
+        self.name=name
+        self.root = True
+        self.children = [] #more accurately would be called adjancies
+
+    def __repr__(self):
+        a= [c.name for c in self.children]
+        return str(a)
+
+    def printer(self): #doesnt do anything in the final version
+        for c in self.children:
+            print(c.name,end=" ")
+
+
+graph ={}
+for orr,oee in dpd.items():
+    if orr not in graph:
+        graph[orr] = Node(orr) #updates graph with k,v where k-> graph[orr] && v->Node(orr) so it will look like {'planet name' : Nodeobject of planet(name, root, children)
+    if oee not in graph:
+        graph[oee] = Node(oee)
+    graph[orr].root=False
+    graph[oee].children.append((graph[orr])) #add fildren
+    graph[orr].children.append((graph[oee])) #add parents
+print(graph)
+
+childless =[] #this segment only works if the add parents line above is disables, otherwise the adjancy//children list will be populated.
+for k,v in graph.items():
+    if len(v.children)==0:
+        childless.append(k)
+
+def breadth_first_search(agraph,origin,target):
+    queue = deque([(agraph[origin],0)]) #tuple of graph values and depth, in a list, set my explicit deque ()
+    visited = {origin:0} #must do
+    while target not in visited: #until the target is found.
+        node,depth = queue.pop()
+        for child in node.children:
+            if child.name not in visited:
+                visited[child.name] = depth+1
+                queue.appendleft((child,depth+1))
+                print(queue,'------',visited)
+            if child.root:
+                print('root found before target')
+                return -67
+    return visited[target]
+
+
+print(breadth_first_search(graph,'YOU','SAN')-2)
