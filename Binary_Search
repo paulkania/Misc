@@ -1,0 +1,25 @@
+#takes a sorted array and target (obviously)
+#see history for previous version.
+#this was done via my brain and mspaint.
+
+def bst(alist,target):
+    l=0
+    r=len(alist)
+    i=0
+    while  l<=r:
+        m=(l+r)//2
+        print(m,alist[m])
+        i+=1
+        if target > alist[m]:
+            l=m+1
+            print('h1')
+            continue
+        if target < alist[m]:
+            r=m-1
+            print('h2')
+            continue
+        if target==alist[m]:
+            print('found')
+            return i, target, m,l,r
+print('---------')
+print(bst(x,-80))
