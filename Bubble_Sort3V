@@ -1,0 +1,68 @@
+#readme
+#3 versions - classic(og),len-1 optimization, len-1+chance optimization
+
+import random
+import time
+
+aalist=[]
+for i in range(10000):
+    aalist.append(random.randint(10,400))
+print(aalist)
+
+#1  
+def bubblesort_og(alist):
+    st = time.time()
+    length = len(alist)
+    swap = True
+    while swap:
+        swap=False
+        for i in range(length-1):
+            if alist[i]>alist[i+1]:
+                temp = alist[i+1]
+                alist[i+1] = alist[i]
+                alist[i] = temp
+                swap = True
+    et= time.time()
+    return (et-st), alist
+
+print(bubblesort_og(aalist))
+
+#2
+def bubblesort_n_1(alist):
+    st = time.time()
+    length = len(alist)
+    swap = True
+    while swap:
+        swap=False
+        for i in range(length-1):
+            if alist[i]>alist[i+1]:
+                temp = alist[i+1]
+                alist[i+1] = alist[i]
+                alist[i] = temp
+                swap = True
+        length -= 1
+    et= time.time()
+    return (et-st), alist
+
+print(bubblesort_n_1(aalist))
+
+#
+def bubblesort_takingadvofchance(alist):
+    st = time.time()
+    y= len(alist)-1
+    newn = y
+    temp=None
+    while newn !=0:
+        newn = 0
+        for i in range(y):
+            if alist[i]> alist[i+1]:
+                temp = alist[i+1]
+                alist[i+1] = alist[i]
+                alist[i] = temp
+                newn = i
+                continue
+        y=newn
+    ft = time.time()
+    return (ft-st), alist
+
+print(bubblesort_takingadvofchance(aalist))
