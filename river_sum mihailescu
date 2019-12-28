@@ -1,0 +1,46 @@
+# river = [[1, 0, 0, 1, 0],[1, 0, 1, 0, 0],[0, 0, 1, 0, 1],[1, 0, 1, 0, 1],[1, 0, 1, 1, 0]]
+river = [[1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0]]
+def mainman(ariver):
+    rsizes=[]
+    visited = [[False for value in row] for row in ariver]
+    for row in range(len(ariver)):
+        for col in range(len(ariver[row])): #row on this line could simply be '0' since each sublist has the same length.
+            if visited[row][col]:
+                continue
+            traverse(row,col,ariver,visited,rsizes)
+    return rsizes
+
+def traverse(row,col,ariver,visited,rsizes):
+    rcount = 0
+    nodestack =[[row,col]]
+    print(nodestack)
+    while len(nodestack):
+        currentnode = nodestack.pop()
+        crow = currentnode[0]
+        ccol = currentnode[1]
+        if visited[crow][col]:
+            continue
+        visited[crow][col] = True
+        if ariver[crow][ccol] == 0:
+            continue
+        rcount+=1
+        unvisitedneighbors = nodestoexplore(row,col,ariver,visited)
+        for node in unvisitedneighbors:
+            nodestack.append(node)
+    if rcount > 0:
+        rsizes.append(rcount)
+
+
+def nodestoexplore(row, col, ariver, visited):
+    unexplorednodes=[]
+    if row > 0 and not visited[row-1][col]:
+        unexplorednodes.append([row-1,col])
+    if row < len(ariver)-1 and not visited[row+1][col]:
+        unexplorednodes.append([row+1,col])
+    if col > 0 and not visited[row][col-1]:
+        unexplorednodes.append([row][col-1])
+    if col < len(ariver[0])-1 and not visited[row][col+1]:
+        unexplorednodes.append([row,col+1])
+    return unexplorednodes
+
+print(mainman(river))
