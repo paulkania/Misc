@@ -1,0 +1,100 @@
+import os
+# os.chdir(r"C:\Users\HP\Desktop\coderun") #HP laptop - jess
+os.chdir(r"C:\Users\proze\Desktop\coderun") #workstatin Desktop
+# print(os.getcwd(),'<--current directory') #prints current directory to ensure you're in the right folder
+# print(os.listdir(os.getcwd()),'<----files in current dir')
+
+with open('aoc19d8.txt','r') as f:
+    pd = f.read() #readlines() will give it as i list, but i only need i string rn.
+
+
+#day 8
+def part1(astring,apixelwidth,apixelheight):
+
+    parea = apixelwidth*apixelheight
+    layercount = int(len(astring)/parea)
+
+    layers=[]
+    for i in range(layercount):
+        stringpartial = astring[0:parea]
+        astring =astring[parea:]
+        layers.append(stringpartial)
+    # print(layers)
+    # print()
+
+    layercount = {}
+    for index  in range(len(layers)):
+        # print('key',layers[index])
+        c=0
+        for element in range(parea):
+            # print(element,layers[index][element])
+            if layers[index][element] == '0':
+                c+=1
+        layercount[layers[index]]=c
+
+    # print(layercount)
+
+    x = min(layercount.items(),key = lambda x: x[1])
+    # print(x)
+    y=x[0]
+    # print(y)
+    n1 =0
+    n2 =0
+    for element in y:
+        if element == '1':
+            n1+=1
+            continue
+        if element == '2':
+            n2+=1
+            continue
+    ans=n1*n2
+    return (ans)
+
+# print(part1('100451890a0c212102',3,2))
+# print(part1(pd,25,6))
+#first submission pew pew
+
+
+def part2(astring,apw,aph):
+    pa=apw*aph
+    loop=0
+    tempstring=''
+    eachpixelcmltivelayer =[]
+    while loop<pa:
+        # print(loop)
+        for index in range(len(astring)):
+            if index%pa ==0:
+                tempstring += astring[index]
+                # print(astring[index])
+        eachpixelcmltivelayer.append(tempstring)
+        tempstring =''
+        astring=astring[1:]
+        loop+=1
+
+
+    anstring=''
+    for cumulativepixellayer in eachpixelcmltivelayer:
+        # print(len(cumulativepixellayer),cumulativepixellayer)
+        for pixel in cumulativepixellayer:
+            if pixel == '2':
+                continue
+            if pixel == '1':
+                anstring +='1'
+                break
+            if pixel == '0':
+                anstring += '0'
+                break
+
+    return  anstring
+
+x= part2(pd,25,6)
+x= x.replace('0',' ')
+x= x.replace('1','8')#i was trying to do a bunch of for i in x replace('0',' ') bullshit.
+    #is it just me or are solutions sometimes asymptotical.
+    #once your so close you can taste it, the progress grinds to a halt to product poop answers.
+
+for index in range(len(x)):
+    print(x[index],end='')
+    if (index+1) %25 ==0:
+        print()
+
