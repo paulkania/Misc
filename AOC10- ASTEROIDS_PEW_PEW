@@ -1,0 +1,49 @@
+import os
+import math
+
+def part1(amatrixwidth,filename):
+    os.chdir(r"C:\Users\proze\Desktop\coderun")
+    with open(filename+'.txt','r') as f:
+        data = f.read()
+    mapstring=data.replace('\n','')
+    visited_angle = []
+    maxasteroidcount = 0
+    iterativeasteroidcount = 0
+    # matrixwidth=20
+    angle = ''
+    for index in range(len(mapstring)):
+        if mapstring[index] == '#':
+            currentstation = index
+            xi = currentstation % amatrixwidth
+            yi = currentstation // amatrixwidth
+            for index2 in range(len(mapstring)):  ##(then check the whole array again)
+                if mapstring[index2] == '#':
+                    xf = index2 % amatrixwidth
+                    yf = index2 // amatrixwidth
+                    # print(index2)
+                    if xf-xi !=0 or yf- yi!=0:
+                        angle = math.atan2((yf - yi) , (xf - xi))
+                        angle = round(angle,10)
+                        # print(angle) ####WATCH for radians
+                    if angle in visited_angle:
+                        continue  ####this got t check the whole arr, butnxt_indx
+                    visited_angle.append(angle)
+                    iterativeasteroidcount += 1
+
+            # after done checking all map do w want this in line with ‘top if’ or second ‘for’?
+            if iterativeasteroidcount > maxasteroidcount:
+                maxasteroidcount = iterativeasteroidcount
+            iterativeasteroidcount = 0
+            visited_angle=[]
+    return maxasteroidcount
+
+print(part1(21,'nfinal_21'))
+#GOT EM
+# print(maxasteroidcount+1)
+#test X - Myscore   / RealScore
+#test 1 -  32       /  33
+#t2 -      33       /   35
+# t3 -     39       /   41
+#t4 -       208     /   210
+# final     219 --gonna guess 221 & 220
+#ANS was 221...what was the source of my off by two???
