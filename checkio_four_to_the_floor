@@ -1,0 +1,47 @@
+import time
+
+import math as m
+def is_covered(room, sensors):
+    start = time.time()
+    class Circle:
+        def __init__(self):
+            self.r = 0
+            self.x = 0
+            self.y = 0
+    def allpointsinrectangle(whlist):
+        positionlist = []
+        i = 0
+        j = 0
+        while len(positionlist) < (whlist[0] * whlist[1]):
+            positionlist.append((i, j))
+            i += 1
+            if i == whlist[0]:
+                i = 0
+                j += 1
+        return positionlist
+    def circleclasscreator(alistofcircledatapoints):
+        circleclass = []
+        for circ in alistofcircledatapoints:
+            c=Circle()
+            c.x = circ[0]
+            c.y = circ[1]
+            c.r = circ[2]
+            circleclass.append(c)
+        return circleclass
+
+    rectanglepoints = allpointsinrectangle(room)
+    circlelist = circleclasscreator(sensors)
+    rectangle_positions_inside_circle = []
+    for circle in circlelist:
+        for position in rectanglepoints:
+        # if position in rectangle_positions_inside_circle:
+        #     continue
+            rect = m.sqrt((position[0] - circle.x) ** 2 + (position[1] - circle.y) ** 2)
+            if rect <= circle.r:
+                if position not in rectangle_positions_inside_circle:
+                    rectangle_positions_inside_circle.append(position)
+    end = time.time()
+    print(end-start)
+    if len(rectangle_positions_inside_circle) == len(rectanglepoints):
+        return True
+    return False
