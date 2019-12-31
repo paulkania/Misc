@@ -1,0 +1,71 @@
+#Solved without aid of his video, now i'll watch his video and see how he did it differently.
+#2 versions - first without duplication awareness, second with.  
+  
+#getting good at stuff feels good...that was supposed to be 'hard'?
+
+
+###VERSION 1 ---- Not duplicate aware (use of set)
+
+def insertionsort(alist):
+    for index in range(len(alist)):
+        j=index
+        while j>0 and alist[j] < alist[j-1]:
+            temp = alist[j]
+            alist[j] = alist[j-1]
+            alist[j-1] = temp
+            j-=1
+    return alist
+
+def largestrange_noduplication_awareness(alist):
+    alist=list(set(alist))
+    count=0
+    maxcount=0
+    for index in range(len(alist)):
+        j=index
+        while  j < len(alist) and alist[j - 1]+1 == alist[j]:
+            count+=1
+            j+=1
+        if count>maxcount:
+            maxcount=count
+            start_and_end = [alist[j - count - 1], alist[j - 1]]
+        count=0
+    return (maxcount+1,start_and_end)
+
+x=largestrange_noduplication_awareness(insertionsort([0,9,19,-1,18,17,2,10,3,12,5,16,4,11,8,7,6,15,12,12,2,1,6,13,14]))
+print(x)
+
+###VERSION 2 -------------------Duplicate aware
+
+def insertionsort(alist):
+    for index in range(len(alist)): ############-1?
+        j=index
+        while j>0 and alist[j] < alist[j-1]:
+            temp = alist[j]
+            alist[j] = alist[j-1]
+            alist[j-1] = temp
+            j-=1
+    return alist
+
+def largestrange_with_duplicationstats(alist):
+    count=0
+    maxcount=0
+    dupecount=0
+    maxdupecount=0
+    for index in range(len(alist)):
+        j=index
+        while  j < len(alist) and (alist[j - 1]+1 == alist[j] or alist[j-1] == alist[j]):
+            if alist[j-1] == alist[j]:
+                dupecount+=1
+            count+=1
+            j+=1
+        if count>maxcount:
+            maxdupecount=dupecount
+            maxcount=count
+            start_and_end = [alist[j - count - 1], alist[j - 1]]
+        count=0
+        dupecount=0
+    return maxcount+1,maxdupecount,maxcount+1-maxdupecount,start_and_end
+
+
+x=largestrange_with_duplicationstats(insertionsort([0,2,3,3,3,4,9,9,13,14,15,16,17]))
+print(x)
