@@ -17,13 +17,8 @@ class Moon:
 		return sum
 	def te(self):
 		return Moon.ke(self)*Moon.pe(self)
-	def vitals(self):
-		vitals = ''
-		for i in self.pos:
-			vitals += str(int(i))
-		for i in self.vel:
-			vitals += str(int(i))
-		return vitals
+	def vitals(self,co_ord):
+		return str(int(self.pos[co_ord]))+str(int(self.vel[co_ord]))
 
 
 
@@ -44,52 +39,35 @@ mcallisto= Moon('callisto',3,5,-1)
 # mcallisto= Moon(2,2,-6)
 
 
-moonlist =[mio,meuropa,mganymede,mcallisto]
-
-loop=1
-mysum =0
-stateset=set()
-for moon in moonlist:
-	for index in range(0, 3):
-		moon.pos[index] += moon.vel[index]
-	moon.stateset.add(Moon.vitals(moon))
 
 
-while loop<2000:
-	comprehensivemoonstate =''
-	for moon in moonlist:
-		for othermoons in moonlist: #? velocity due to planet gravities.
-			if moon!=othermoons:
-				for index in range(0,3):
-					if moon.pos[index] < othermoons.pos[index]:
-						moon.vel[index]+=0.5
-						othermoons.vel[index]-=0.5
-						continue
-					elif moon.pos[index] > othermoons.pos[index]:
-						moon.vel[index]-=0.5
-						othermoons.vel[index]+=0.5
-						continue
-					elif moon.pos[index] == othermoons.pos[index]:
-						pass
-	for moon in moonlist: #? position
-		for index in range(0,3):
-			moon.pos[index]+=moon.vel[index]
-		moon.stateset.add(Moon.vitals(moon))
-		if len(moon.stateset) < loop and moon.name=='europa':
-			print(moon.name,len(moon.stateset),loop)
-			break
+def part2(aloopnum):
+	moonlist =[mio,meuropa,mganymede,mcallisto]
+	loop=1
+	mysum =0
+	statelist=[set(),set(),set()] #xstateset = stateset[0]
+	while loop<aloopnum:
+		comprehensivemoonstate ='' #below for loops represents a timestep
+		for moon in moonlist:
+			for othermoons in moonlist: #? velocity due to planet gravities.
+				if moon!=othermoons:
+					for index in range(0,3):
+						if moon.pos[index] < othermoons.pos[index]:
+							moon.vel[index]+=0.5
+							othermoons.vel[index]-=0.5
+							continue
+						elif moon.pos[index] > othermoons.pos[index]:
+							moon.vel[index]-=0.5
+							othermoons.vel[index]+=0.5
+							continue #deleted elif == because it was self-evidently redundant. # #   #a
 
-		# comprehensivemoonstate+=instancevitals
+		for moon in moonlist:
+			for co_ord in range(0,3):
+				moon.pos[co_ord]+=moon.vel[co_ord]
+				statelist[co_ord].add(Moon.vitals(moon,co_ord))#(moon.pos[index]+moon.vel[index])
+		print(loop)
+		loop+=1
+		print(len(statelist))
+		return loop,statelist
 
-	# stateset.add(comprehensivemoonstate)
-	# print(stateset,len(stateset),loop)
-	# if len(stateset)<loop:
-	# 	print(loop)
-	# 	break
-	loop+=1
-# for moon in moonlist:
-#     mysum+=moon.te()
-#     if loop%1000==0:
-#         print(loop,moon.pos,moon.vel,moon.pe(),moon.ke(),moon.te(),mysum)
-# mysum=0
-
+print(part2(7))
