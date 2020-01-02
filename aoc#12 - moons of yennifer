@@ -1,0 +1,95 @@
+class Moon:
+	def __init__(self,name,x,y,z):
+		self.name = name
+		self.pos=[x,y,z]
+		self.vel= [0,0,0]
+		self.stateset=set()
+
+	def pe(self):
+		sum=0
+		for i in self.pos:
+			sum+=abs(i)
+		return sum
+	def ke(self):
+		sum = 0
+		for i in self.vel:
+			sum += abs(i)
+		return sum
+	def te(self):
+		return Moon.ke(self)*Moon.pe(self)
+	def vitals(self):
+		vitals = ''
+		for i in self.pos:
+			vitals += str(int(i))
+		for i in self.vel:
+			vitals += str(int(i))
+		return vitals
+
+
+
+#Test 1 - PassA
+mio = Moon('io',-1,0,2)
+meuropa= Moon('europa',2,-10,-7)
+mganymede= Moon('ganyemede',4,-8,8)
+mcallisto= Moon('callisto',3,5,-1)
+#Test 2 - PassA
+# mio = Moon(-8,-10,0)
+# meuropa= Moon(5,5,10)
+# mganymede= Moon(2,-7,3)
+# mcallisto= Moon(9,-8,-3)
+#myinput-passedA
+# mio = Moon(-16,-1,-12)
+# meuropa= Moon(0,-4,-17)
+# mganymede= Moon(-11,11,0)
+# mcallisto= Moon(2,2,-6)
+
+
+moonlist =[mio,meuropa,mganymede,mcallisto]
+
+loop=1
+mysum =0
+stateset=set()
+for moon in moonlist:
+	for index in range(0, 3):
+		moon.pos[index] += moon.vel[index]
+	moon.stateset.add(Moon.vitals(moon))
+
+
+while loop<2000:
+	comprehensivemoonstate =''
+	for moon in moonlist:
+		for othermoons in moonlist: #? velocity due to planet gravities.
+			if moon!=othermoons:
+				for index in range(0,3):
+					if moon.pos[index] < othermoons.pos[index]:
+						moon.vel[index]+=0.5
+						othermoons.vel[index]-=0.5
+						continue
+					elif moon.pos[index] > othermoons.pos[index]:
+						moon.vel[index]-=0.5
+						othermoons.vel[index]+=0.5
+						continue
+					elif moon.pos[index] == othermoons.pos[index]:
+						pass
+	for moon in moonlist: #? position
+		for index in range(0,3):
+			moon.pos[index]+=moon.vel[index]
+		moon.stateset.add(Moon.vitals(moon))
+		if len(moon.stateset) < loop and moon.name=='europa':
+			print(moon.name,len(moon.stateset),loop)
+			break
+
+		# comprehensivemoonstate+=instancevitals
+
+	# stateset.add(comprehensivemoonstate)
+	# print(stateset,len(stateset),loop)
+	# if len(stateset)<loop:
+	# 	print(loop)
+	# 	break
+	loop+=1
+# for moon in moonlist:
+#     mysum+=moon.te()
+#     if loop%1000==0:
+#         print(loop,moon.pos,moon.vel,moon.pe(),moon.ke(),moon.te(),mysum)
+# mysum=0
+
