@@ -1,0 +1,16 @@
+def alphabet_position(text):
+	alphabet ='abcdefghijklmnopqrstuvwxyz'
+	alphadict ={}
+	c=0
+	for alpha in alphabet:
+		c+=1
+		alphadict[alpha]=str(c)
+		alphadict[alpha.upper()] = str(c)
+
+	output=''
+	for alpha in text:
+		if alpha in alphadict.keys():
+			output = output + alphadict[alpha] +' ' 
+
+	return output[:-1]
+
