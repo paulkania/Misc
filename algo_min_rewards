@@ -1,0 +1,59 @@
+array =[5,3,1,2,-3,7,15,66,3,77,88,4]
+
+class Student:
+    def __init__(self,grade):
+        self.grade=grade
+        self.reward = 0
+        self.max=False
+        self.min=False
+
+st_array=[] #make an array of student instances.
+for element in array:
+    st_array.append(Student(element))
+
+
+if st_array[0].grade > st_array[1].grade: #index[0] max-min edgecase
+    st_array[0].max = True
+else:
+    st_array[0].min = True
+
+if st_array[-1].grade > st_array[-2].grade: #index[len(array]] end-off array min-max edgecase
+    st_array[-1].max = True
+else:
+    st_array[-1].min = True
+
+for index in range(1,len(st_array)-1): #min-maxx sniffing for non-edge cases.
+    if st_array[index-1].grade > st_array[index].grade < st_array[index+1].grade:
+        st_array[index].min=True
+    if st_array[index-1].grade < st_array[index].grade > st_array[index+1].grade:
+        st_array[index].max=True
+
+
+for index in range(len(st_array)):
+    if st_array[index].min == True: #for each min
+        movableindex = index
+        count = 1
+        while movableindex >= 0 and st_array[movableindex].max ==False:#look left, count upwards, dont hit the max
+            st_array[movableindex].reward = count
+            movableindex -= 1
+            count+=1
+        movableindex = index
+        count = 1
+        while movableindex <= len(st_array)-1 and st_array[movableindex].max == False:  # look right, count upwards, dont hit the max.
+            st_array[movableindex].reward = count
+            movableindex += 1
+            count += 1
+
+for index in range(len(st_array)):
+    if st_array[index].max == True: #take care of maxes, by looking both left and right. except if the max is on the right edge, then the exception is thrown, to only look left.
+        try:
+            st_array[index].reward=max(st_array[index-1].reward,st_array[index+1].reward)+1
+        except:
+            st_array[index].reward = st_array[index - 1].reward+1
+
+rewardarray=[]
+ans=0
+for student in st_array:
+    ans+=student.reward
+    rewardarray.append(student.reward)#print(student.grade,student.reward)
+print(ans,rewardarray)
