@@ -1,0 +1,45 @@
+array =[0,1,5,2,0,30,0,0,0,1,6,3,1]
+ans=0
+print(array[1])
+for index in range(len(array)-1): #combing for lefridge
+    if array[index] > array[index+1]:
+        leftridge, lrindex =array[index], 0
+        array=array[index:]
+        break
+
+for index in range(len(array)-1,0,-1): #combing for rightridge
+    if array[index] > array[index-1]:
+        rightridge,rightindex=array[index],index
+        array = array[:index + 1]
+        break
+#########
+
+
+inter_ridge_exists = False
+for index in range(1,len(array)-1): #searching for intermediary ridges
+    if array[index] > leftridge:
+        inter_ridge_exists = True
+        inter_ridge = array[index]
+        inter_index= index
+        for ind in range(lrindex,inter_index):
+            ans = ans + min(leftridge,inter_ridge)-array[ind]
+if inter_ridge_exists:
+    leftridge=inter_ridge
+
+if not inter_ridge_exists:
+    for ind in range(lrindex, rightindex):
+        ans = ans + min(leftridge, rightridge) - array[ind]
+
+print(array)
+print(leftridge,lrindex)
+print(rightridge,rightindex)
+print(inter_ridge,inter_index)
+
+# for index in range(len(array)-1,0,-1): #combing for rightridge
+
+print(array)
+print(ans)
+
+
+    # ans = ans + min(leftridge,rightridge)-array[index]
+
