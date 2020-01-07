@@ -1,45 +1,73 @@
-array =[0,1,5,2,0,30,0,0,0,1,6,3,1]
+class Watarr:
+	def __init__(self,value):
+		self.value=value
+		self.divisor = False
+
+array =[3,6,1,3,7,10,3,0,7,0]
+
+warray=[]
+for element in array:
+	warray.append(Watarr(element))
+
+
+for index in range(len(warray)): #find ldiv
+	if warray[index].value > warray[index+1].value:
+		warray[index].divisor = True
+		l_val,l_ind = warray[index].value,index
+		break
+
+for index in range(len(warray)-1,0,-1): #r_div
+	# print(index)
+	if warray[index].value> warray[index-1].value:
+		warray[index].divisor = True
+		r_val,r_ind = warray[index].value,index
+		break
+
+l=1
+while l<50: #sniffing out divisors - improve the while statement later.
+	l+=1
+	for index in range(l_ind,r_ind):
+		if warray[index].value > min(l_val,r_val):
+			l_val,l_ind = warray[index].value,index
+			warray[index].divisor = True
+			break
+
+for index in range(len(warray)): #resetting the l_val,l_ind to first//origin position
+	if warray[index].divisor == True:
+		l_val,l_ind = warray[index].value, index
+		break
+
+div_count=0
+for index in range(len(warray)):
+	if warray[index].divisor == True:
+		div_count+=1
+
+gapoccurs = True
 ans=0
-print(array[1])
-for index in range(len(array)-1): #combing for lefridge
-    if array[index] > array[index+1]:
-        leftridge, lrindex =array[index], 0
-        array=array[index:]
-        break
+count=0
+while count != div_count-1:
+	for index in range(l_ind+1,r_ind+1): #start to the right of the leftmost divisor, and end on the right divisor
+		print(l_ind+1,r_ind)
+		if warray[index].divisor == True:
+			count+=1
+			print(l_ind,index)
+			if index - l_ind < 2: #skips a divisor if they are immediately adjacent.
+				print('occurs')
+				l_ind = index
+				continue
+			gapoccurs= False #does nothing (lit. pass) rn.
+			for subindex in range(l_ind+1,index):
+				print('here-subindex',l_ind+1,index,count,div_count)
+				gapoccurs = True
+				if div_count - count !=1:
+					ans = ans + min(l_val,warray[index].value) - warray[subindex].value #compares left value and current divisor value. thats where my bug is
+				else:
+					ans = ans + min(r_val,warray[index].value) - warray[subindex].value #compares left value and current divisor value. thats where my bug is
 
-for index in range(len(array)-1,0,-1): #combing for rightridge
-    if array[index] > array[index-1]:
-        rightridge,rightindex=array[index],index
-        array = array[:index + 1]
-        break
-#########
+				print(count,div_count,'>',ans,l_val,warray[index].value)
+			l_ind = index
+			if gapoccurs == False:
+				pass
+			break
 
-
-inter_ridge_exists = False
-for index in range(1,len(array)-1): #searching for intermediary ridges
-    if array[index] > leftridge:
-        inter_ridge_exists = True
-        inter_ridge = array[index]
-        inter_index= index
-        for ind in range(lrindex,inter_index):
-            ans = ans + min(leftridge,inter_ridge)-array[ind]
-if inter_ridge_exists:
-    leftridge=inter_ridge
-
-if not inter_ridge_exists:
-    for ind in range(lrindex, rightindex):
-        ans = ans + min(leftridge, rightridge) - array[ind]
-
-print(array)
-print(leftridge,lrindex)
-print(rightridge,rightindex)
-print(inter_ridge,inter_index)
-
-# for index in range(len(array)-1,0,-1): #combing for rightridge
-
-print(array)
 print(ans)
-
-
-    # ans = ans + min(leftridge,rightridge)-array[index]
-
