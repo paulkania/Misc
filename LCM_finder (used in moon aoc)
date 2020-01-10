@@ -1,0 +1,15 @@
+def lcmfinder(alist):
+	gcd=int()
+	while len(alist):
+		for number in range(min(alist[0],alist[1]),0,-1): #find the gcd of the two first numbers in the list
+			if alist[0]%number == 0 and alist[1]%number ==0:
+				gcd = number
+				break #since we count from the top, we take the first one then bounce out.
+		alist.append(int((alist[0])*alist[1] / gcd)) #append the lcm of of the firs two numbers
+		del alist[0:2] #delete 0th and 1st number
+		if len(alist) ==1:
+			return alist[0]
+
+ml=[11,12,21,34,9]
+print(lcmfinder(ml))
+
