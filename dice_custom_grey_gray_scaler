@@ -1,0 +1,45 @@
+from PIL import Image
+import os
+
+print(os.getcwd())
+os.chdir(r'C:\Users\proze\Desktop\exp')
+img = Image.open('sg.jpg').convert('RGB') #rollerblades
+# img = Image.open('test.png').convert('RGB') #black grid
+
+print(img.size,img.size[0]*img.size[1])
+
+# basewidth = 50
+# heightpercent = basewidth/img.size[0]
+# img=img.resize((basewidth,int(heightpercent*img.size[1])),Image.ANTIALIAS)
+# img.save('resized.png')
+
+
+d=40
+newcolor = (d,d,d)
+# print(img.size,img.size[0]*img.size[1])
+pixels=img.load()
+# print(pixels[30,30])
+for x in range(img.size[0]):
+	for y in range(img.size[1]):
+		brightness0_255 = int(sum(img.getpixel((x,y)))/3)
+		if d*0 <  brightness0_255 <= d*1: ##d1
+			pixels[x,y] = newcolor
+			continue
+		elif d*1 < brightness0_255 <= d*3: #d2
+					pixels[x,y] = tuple(2*i for i in newcolor)
+					continue
+		elif d*3 < brightness0_255 <= d*5: #d3
+					pixels[x,y] = tuple(3*i for i in newcolor)
+					continue
+		elif d*5 < brightness0_255 <= d*7: #d4
+					pixels[x,y] = tuple(5*i for i in newcolor)
+					continue
+		elif d*7 < brightness0_255 <= d*8: #d5
+					pixels[x,y] = tuple(7*i for i in newcolor)
+					continue
+		elif d*9 < brightness0_255: #d6
+					pixels[x,y] = tuple(9*i for i in newcolor)
+					continue
+
+print(pixels[30,30])
+img.save('5.png')
