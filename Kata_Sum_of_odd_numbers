@@ -1,0 +1,45 @@
+#two solutions. 
+#1st was night of 10th, and it works but has super high timecomplexity and is ugly
+#2nd noon of 11th (10011)
+
+###------------------------------------#sol 1 - bad
+row=100
+
+myl=[]
+for num in range(1,1000000,2):
+	myl.append(num)
+
+a=[]
+for num in range(1,row+1):
+	for obj in range(0,num):
+		a.append(myl[0])
+		del myl[0]
+
+b=a[-row:]
+ans=sum(a[-row:])
+print(ans)
+
+###------------------------------------#sol 2 - sexy
+import time
+
+b=time.time()
+from functools import reduce
+a=[]
+def factorial_add(anumber):
+	a.append(anumber)
+	if anumber == 1:
+		return reduce(lambda x,y:x+y,a)
+	return factorial_add(anumber-1)
+def rowsum(arow):
+	startpoint = factorial_add(arow)
+	endpoint = startpoint+arow
+	myl=[]
+	for num in range(1,startpoint+endpoint,2):
+		myl.append(num)
+	ansl= myl[startpoint-arow:endpoint-arow]
+	ans = reduce(lambda x,y:x+y,ansl)
+	return ans
+
+print(rowsum(100))
+e=time.time()
+print(e-b)
