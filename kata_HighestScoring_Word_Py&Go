@@ -1,0 +1,25 @@
+###part 1 - setting a score for each letter
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+alphad ={}
+score=1
+for rune in alphabet:
+    alphad[rune] = score
+    score+=1
+
+
+def bestwordfinder(sentence):
+    sentence = sentence.split()
+    bestwordscore=0
+    currentwordscore=0
+    bestword=''
+    for word in sentence:
+        for rune in word:
+            if rune in alphad:
+                currentwordscore += alphad[rune]
+        if currentwordscore > bestwordscore:
+            bestwordscore = currentwordscore
+            bestword = word
+        currentwordscore =0
+    return bestwordscore
+tence = "azzza brzbbeeit c d that lady got big arms"
+print(bestwordfinder(tence))
