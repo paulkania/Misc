@@ -1,3 +1,5 @@
+###################Python
+
 ###part 1 - setting a score for each letter
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 alphad ={}
@@ -23,3 +25,46 @@ def bestwordfinder(sentence):
     return bestwordscore
 tence = "azzza brzbbeeit c d that lady got big arms"
 print(bestwordfinder(tence))
+
+
+
+################GO
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func High(s string) string {
+	alphabet := "abcdefghijklmnopqrstuvwxyz"
+	alphamap := make(map[string]bool)
+	//score:=1
+	for _, chr := range alphabet {
+		alphamap[string(chr)] = true
+		//score+=1
+	}
+
+
+	sentence := strings.Split(s, " ")
+	bestword, bestwordscore := "", int32(0)
+	currentwordscore := int32(0)
+	for _, word := range sentence {
+		for _, letter := range word {
+			if alphamap[string(letter)] {
+				currentwordscore += letter
+			}
+		}
+		if currentwordscore > bestwordscore {
+			bestwordscore = currentwordscore
+			bestword = word
+		}
+		currentwordscore = 0
+	}
+	return bestword
+}
+
+
+func main() {
+	fmt.Println(High("climbing volcano"))
+}
