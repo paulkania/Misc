@@ -1,0 +1,64 @@
+##readme
+#failure is probably input() related...answer is simple.
+
+t = int(input()) #num of test cases
+
+
+#using t, and k seem pointless, t much be necessarry for a for loop,
+#but k is == len(closedfloors)
+
+for test in range(t):
+	n, s, k = input().split()  # num of floors, my floor, num of closed floors
+	n, s, k = int(n), int(s), int(k)
+	closedfloors = list(input().split())
+	closedfloors = [int(closedfloors[x]) for x in range(len(closedfloors))]
+	ans = n #answer starts out as max answer so it will always be overcomped.
+	stepstaken = 0
+	for floor in range(s,n+1):
+		if floor not in closedfloors:
+			ans = stepstaken #ans will always be greater so no need to check spatially until we look down
+			break
+		stepstaken +=1
+
+	stepstaken = 0
+	for floor in range(s,1,-1): #min floor is 2
+		if floor not in closedfloors:
+			if stepstaken < ans:
+				ams = stepstaken
+		break
+		stepstaken +=1
+	print(ans)
+
+#Fixed Code, w help from BOUGA -> https://codeforces.com/contest/1293/submission/69102846
+https://codeforces.com/contest/1293/submission/69102846
+t = int(input())
+for test in range(t):
+	n, s, k = map(int, input().split())
+	closedfloors = list(map(int,input().split()))
+
+	answer =0
+	while(s-answer in closedfloors or 1 > s-answer) and (s+answer in closedfloors or n < s+answer):
+		answer+=1
+	print(answer)
+
+
+###post submission code, partially fixed.##
+t = int(input()) #num of test cases
+for test in range(t):
+	n, s, k = map(int, input().split())
+	closedfloors = list(map(int,input().split()))
+	ans = n #answer starts out as max answer so it will always be overcomped.
+	stepstaken = 0
+	for floor in range(s,n+1):
+		if floor not in closedfloors:
+			ans = stepstaken #ans will always be greater so no need to check spatially until we look down
+			break
+		stepstaken +=1
+	stepstaken = 0
+	for floor in range(s,1,-1): #min floor is 2
+		if floor not in closedfloors:
+			if stepstaken < ans:
+				ams = stepstaken
+		break
+		stepstaken +=1
+	print(ans)
