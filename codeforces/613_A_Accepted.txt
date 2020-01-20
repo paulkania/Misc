@@ -1,6 +1,0 @@
-https://codeforces.com/contest/1285/problem/A
-
-
-###solution
-n= int(input())
-print(n+1)

@@ -1,0 +1,10 @@
+width,height = 4,9
+for row in range(height):
+	for col in range(width):
+		index = width*row + col
+		x= index%width
+		y= index//width
+		print(index,'->',(col,row),(x,y))
+#the big juicy boy to recall before you dive in without thinking,
+#is that col and row can be counter-intuitive, in regards to,
+#whether they refer to x or y.
