@@ -23,11 +23,12 @@ from email.mime.text import MIMEText #used type:localhost
 import ssl
 import getpass
 #Add your credentials here
-tw_keys = {
-        'ck':        'xjogzUgrFDzRSpDok7ONegctr',
-        'cs':     'WRfRgUOFzfiMpInpAdu0OycexPCmXaFIjlLL9TyV4yb8v6Ut7O',
-        'atk':    '1188183335748689925-Cv4rODGb2RDuzigU3G3ZLM73Cax1nh',
-        'ats': 'e4gH7WFFFSMB2VdKA14bGP3R866K1kxWRGWR5KmsCQDuC'}
+#ENTER TW_Keys HERE!
+###
+####
+###
+###
+random sentence so python throws an error!
 
 #Setup access to API
 auth = tweepy.OAuthHandler(tw_keys['ck'], tw_keys['cs'])
