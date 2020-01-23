@@ -1,21 +1,5 @@
-#REAMDE
-#i set less secure app access to off, so that i dont get hacked by 35.2 by 53.89 long lat. turn it off for this program to work
-
-################bat workstation
-# @echo off
-# C:\Python37\python.exe C:\Users\proze\.PyCharm2019.3\config\scratches\scratch_49.py %*
-# pause
-
-################bat HPlaptop
-# @echo off
-# C:\Users\HP\AppData\Local\Programs\Python\Python38-32\python.exe C:\Users\HP\.PyCharmCE2019.2\config\scratches\deadmswitch.py %*
-# pause
-
-#windows startup programs
-#wir+r then search in box that will popup 'shell:startup'
-
 ################localhost
-#python -m smtpd -c DebuggingServer -n localhost:1020
+#python -m smtpd -c DebuggingServer -n localhost:1020 or 4000 or 8000 or 8080
 import tweepy
 import datetime
 import smtplib
@@ -24,17 +8,23 @@ import ssl
 import getpass
 #Add your credentials here
 tw_keys = {
-        'ck'   :     'xjogzUgrFDzRSpDok7ONegctr',
-        'cs'   :  'WRfRgUOFzfiMpInpAdu0OycexPCmXaFIjlLL9TyV4yb8v6Ut7O',
-        'atk'   : '1188183335748689925-Cv4rODGb2RDuzigU3G3ZLM73Cax1nh',
-        'ats' :'e4gH7WFFFSMB2VdKA14bGP3R866K1kxWRGWR5KmsCQDuC'}
+        'ck'   :     'xfF7gFq6XT52DswRRP3ANOFAb',
+        'cs'   :  '2zrHKTHQeE0ejaMyXb5AvjetlCMdQ6wjlBx9edVnngTw53c9bG'}
 
 #Setup access to API
 auth = tweepy.OAuthHandler(tw_keys['ck'], tw_keys['cs'])
-auth.set_access_token(tw_keys['atk'], tw_keys['ats'])
+# auth.set_access_token(tw_keys['atk'], tw_keys['ats'])
 api = tweepy.API(auth)
 
 most_recent_activity = api.user_timeline(count=1)
+#https://codeofaninja.com/tools/find-twitter-id
+#http://docs.tweepy.org/en/v3.5.0/api.html
+#blockstream_team
+#@BlockstreamT
+
+#https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friends-list
+# API.user_timeline([id/user_id/screen_name][, since_id][, max_id][, count][, page])
+
 for tweet in most_recent_activity:
     tweet_time = tweet.created_at
     tweet_meat = tweet.text
