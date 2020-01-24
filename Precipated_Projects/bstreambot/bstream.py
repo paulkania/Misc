@@ -38,15 +38,19 @@ auth = tweepy.OAuthHandler(tw_keys['ck'], tw_keys['cs'])
 auth.set_access_token(tw_keys['atk'], tw_keys['ats'])
 api = tweepy.API(auth)
 
-team = ['pwuille','Mario_Gibney','adam3us','wtogami','tomatodread','Excellion','jb55','n1ckler','Snyke','LarryBitcoin','notgrubles','humanifold','AlyseKilleen','SeleneJin','afilini','sanket1729']
+team = ['zackvoell','pwuille','Mario_Gibney','adam3us','wtogami','tomatodread','Excellion','jb55','n1ckler','Snyke','LarryBitcoin','notgrubles','humanifold','AlyseKilleen','SeleneJin','afilini','sanket1729']
 print('team length -->',len(team))
 # team = ['pwuille','Mario_Gibney','adam3us','wtogami','tomatodread','Excellion','jb55','n1ckler','Snyke',LarryBitcoin,notgrubles,humanifold,AlyseKilleen,SeleneJin,afilini,sanket1729]
 
 def user_timeline(ateamlist,acount):
     __teamoutput = []
     for aname in ateamlist:
-        aname = api.user_timeline(screen_name=str(aname), count=acount, since_id=team_since_id_dict[str(aname)])
-        __teamoutput.append(aname)
+        try:
+            aname = api.user_timeline(screen_name=str(aname), count=acount, since_id=team_since_id_dict[str(aname)])
+            __teamoutput.append(aname)
+        except tweepy.TweepError as e:
+            print(aname,'blocked you, it is ok, dont take it personal paulo')
+            continue
     return __teamoutput
 
 def user_timeline_impregnation(ateamlist,acount,asince_last_post_id): #num ex1->12204185514351370U25
@@ -61,21 +65,28 @@ teamoutput = user_timeline(team,10) #off to impregnate, on if impregnated.
 
 
 
+def retweet():
+    i=0
+    for member in teamoutput:
+        i+=1
+        for tweet in member:
+            # team_since_id_dict[str(tweet.author.screen_name)] = tweet.id #on to impregnate, off if impregnated.
+            if tweet.text[0:2] != 'RT' and tweet.in_reply_to_screen_name is None:
+                print(i,tweet.author.screen_name,tweet.text)
+                team_since_id_dict[str(tweet.author.screen_name)] =  tweet.id
+                api.retweet(tweet.id)
 
-i=0
-for member in teamoutput:
-    i+=1
-    for tweet in member:
-        # team_since_id_dict[str(tweet.author.screen_name)] = tweet.id #on to impregnate, off if impregnated.
-        if tweet.text[0:2] != 'RT' and tweet.in_reply_to_screen_name is None:
-            print(i,tweet.author.screen_name,tweet.text)
-            team_since_id_dict[str(tweet.author.screen_name)] =  tweet.id
-            api.retweet(tweet.id)
+    with open("Users_ID.txt", "wb") as myFile:
+        pickle.dump(team_since_id_dict, myFile)
 
-with open("Users_ID.txt", "wb") as myFile:
-    pickle.dump(team_since_id_dict, myFile)
+    print('bottom',len(team_since_id_dict),team_since_id_dict)
+    # api.update_status('test003')
+    return
 
-print('bottom',len(team_since_id_dict),team_since_id_dict)
+#call the function so the bat script will execute.
+retweet()
+
+
 
 # pwuille = api.user_timeline(screen_name='pwuille', count=50,since_id=team_by_since_id['pwuille'])
 # Mario_Gibney = api.user_timeline(screen_name='mario_gibney', count=60,since_id=team_by_since_id['Mario_Gibney'])
