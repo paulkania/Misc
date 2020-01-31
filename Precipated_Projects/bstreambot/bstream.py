@@ -26,8 +26,8 @@ print(os.getcwd(),'<--current directory') #prints current directory to ensure yo
 #Load the pickle file
 with open("Users_ID.txt", "rb") as myFile:
     team_since_id_dict = pickle.load(myFile)
-print('top',team_since_id_dict)
-print('top',len(team_since_id_dict))
+print('downloaded pickle',len(team_since_id_dict),team_since_id_dict)
+print()
 
 ##load pickled keys.
 with open("tw_keys.txt", "rb") as myFile:
@@ -38,8 +38,8 @@ auth = tweepy.OAuthHandler(tw_keys['ck'], tw_keys['cs'])
 auth.set_access_token(tw_keys['atk'], tw_keys['ats'])
 api = tweepy.API(auth)
 
-team = ['zackvoell','pwuille','Mario_Gibney','adam3us','wtogami','tomatodread','Excellion','jb55','n1ckler','Snyke','LarryBitcoin','notgrubles','humanifold','AlyseKilleen','SeleneJin','afilini','sanket1729']
-print('team length -->',len(team))
+team = ['pwuille','Mario_Gibney','adam3us','wtogami','tomatodread','Excellion','jb55','n1ckler','Snyke','LarryBitcoin','notgrubles','humanifold','AlyseKilleen','SeleneJin','afilini','sanket1729']
+#del_members = 'zackvoell'
 # team = ['pwuille','Mario_Gibney','adam3us','wtogami','tomatodread','Excellion','jb55','n1ckler','Snyke',LarryBitcoin,notgrubles,humanifold,AlyseKilleen,SeleneJin,afilini,sanket1729]
 
 def user_timeline(ateamlist,acount):
@@ -49,7 +49,7 @@ def user_timeline(ateamlist,acount):
             aname = api.user_timeline(screen_name=str(aname), count=acount, since_id=team_since_id_dict[str(aname)])
             __teamoutput.append(aname)
         except tweepy.TweepError as e:
-            print(aname,'blocked you, it is ok, dont take it personal paulo')
+            print(aname,'doesnt want to be RT"d')
             continue
     return __teamoutput
 
@@ -69,17 +69,27 @@ def retweet():
     i=0
     for member in teamoutput:
         i+=1
+        first_tweet= True
         for tweet in member:
             # team_since_id_dict[str(tweet.author.screen_name)] = tweet.id #on to impregnate, off if impregnated.
             if tweet.text[0:2] != 'RT' and tweet.in_reply_to_screen_name is None:
                 print(i,tweet.author.screen_name,tweet.text)
-                team_since_id_dict[str(tweet.author.screen_name)] =  tweet.id
-                api.retweet(tweet.id)
+                if first_tweet:
+                    team_since_id_dict[str(tweet.author.screen_name)] =  tweet.id
+                    first_tweet = False
+                try:
+                    api.retweet(tweet.id)
+                except tweepy.TweepError as e:
+                    print(str(tweet.author.screen_name),'has been retweeted already')
+                    team_since_id_dict[str(tweet.author.screen_name)] = tweet.id+1
+                    print('the offending tweet -->',tweet.id)
+                    continue
 
-    with open("Users_ID.txt", "wb") as myFile:
-        pickle.dump(team_since_id_dict, myFile)
+    # del team_since_id_dict['zackvoell']
+    with open("Users_ID.txt", "wb") as _myFile:
+        pickle.dump(team_since_id_dict, _myFile)
 
-    print('bottom',len(team_since_id_dict),team_since_id_dict)
+    print('saving/uploading/outloading',len(team_since_id_dict),team_since_id_dict)
     # api.update_status('test003')
     return
 

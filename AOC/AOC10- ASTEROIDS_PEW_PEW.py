@@ -5,7 +5,9 @@ def part1(amatrixwidth,filename):
     os.chdir(r"C:\Users\proze\Desktop\coderun")
     with open(filename+'.txt','r') as f:
         data = f.read()
+    # print(1,data)
     mapstring=data.replace('\n','')
+    # print(2,mapstring)
     visited_angle = []
     maxasteroidcount = 0
     iterativeasteroidcount = 0
@@ -60,7 +62,7 @@ def part2(afilename,amatrixwidth,xhome,yhome):
     allasteroids=[]
     asteroid_dict={}
     current_asteroid_angle =-0.1 #anything under 0
-    planet_smasher_counter =0
+    planet_smasher_counter = 0
     anslist= []
     for index in range(len(mapstring)):
         if mapstring[index] == '#':
@@ -70,11 +72,13 @@ def part2(afilename,amatrixwidth,xhome,yhome):
             mahanttan_distance = abs(xast-xhome)+abs(yast-yhome)
             if mahanttan_distance !=0:
                 angle = round(math.atan2((yhome - yast), (xhome - xast)),20)
+                print('a1',angle)
                 if angle >=0: #creating a cohesive circle range instead of a negative and positive
                     angle=round(angle*(360/(2*math.pi)),8)
+                    print('a>0',angle)
                 else:
                     angle = round((2*math.pi +angle)*(360/(2*math.pi)),8)
-
+                    print('a<0',angle)
                 if angle <90: #starting the circle at the top instead of at the left.
                     angle = angle+270
                 else:
@@ -87,6 +91,7 @@ def part2(afilename,amatrixwidth,xhome,yhome):
         for tuple,visited in asteroid_dict.items():
             circlereset = False #checker to see if the circle should be reset to 0
             if tuple[0] > current_asteroid_angle and asteroid_dict[tuple] == False:
+                # print('sdsdsdsds',tuple[0])
                 circlereset = True #avoid circle reset since an anglelarger than current asteroid angle exists
                 asteroid_dict[tuple] = True #mark as visited
                 anslist.append(tuple)
@@ -97,13 +102,10 @@ def part2(afilename,amatrixwidth,xhome,yhome):
     
     return anslist
 
-print(part1(21,'fin21')) #gives 11,11, feed into part 2
+# print(part1(21,'fin21')) #gives 11,11, feed into part 2
+# print()
 x=part2('fin21',21,11,11)
-
 count=1
 for el in x:
     print(el,'---',count)
-    if count==200:
-        print(el[2][0]*100+el[2][1])
-        break
     count+=1
