@@ -89,6 +89,7 @@ def retweet():
     with open("Users_ID.txt", "wb") as _myFile:
         pickle.dump(team_since_id_dict, _myFile)
 
+    print('\n','\n','\n','\n')
     print('saving/uploading/outloading',len(team_since_id_dict),team_since_id_dict)
     # api.update_status('test003')
     return
