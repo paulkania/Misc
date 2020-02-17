@@ -1,3 +1,9 @@
+This Bot is dead simple.
+It retweets the most active original content (no replies or retweets) from members of the blockstream team.
+I also use it as a personal account (if you notice some activity that isn't inline with the above).
+
+
+
 Things I've done for the first time.
 
 pickle - To save state externally (specifically the state of the id's of the most recent tweets of each user I'm following.
