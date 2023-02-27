@@ -1,0 +1,19 @@
+read inputfile<x>
+transfer inputfile<x> into bitstream
+
+input secret -> could be a pgp key.
+	e.g. pgp key -> CB536D9E10B1251DD59CBF686CA79961EA6170E3 -> hexstring-len-40, i.e. bitlength is 40*4=160
+with secret -> calculate bitlength of secret
+
+break inputfile.bitstream into len(secret.bitlength) blocks
+
+for each block:
+	take last bit, change it to whatever the secret bit is.
+
+
+to read the secret, take this altered file, break into y blocks read the last bit of each block
+
+-----------------
+
+
+use random floats until you have blocks of 160 blocks of 100 char.
