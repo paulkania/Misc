@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#TODO - create a list of prefixes to iterate over, to avoid duplication of code
+
+
+
+#PREFIX
+prefixT="'TEAMS_Escalation_T"
+prefixB="rep-scrip"
+
+# Specify the folder path
+folder="C:\Users\prozehnal\Downloads - Copy"
+
+# Check if the folder exists
+if [ -d "$folder" ]; then
+    # Loop through each file in the folder
+    for file in "$folder"/*; do
+        # Check if the item is a file [if it is a folder, it will skip this logic]
+        if [ -f "$file" ]; then
+            # match prefixes with filename
+            filename=$(basename "$file")
+			if [[ "$filename" == "${prefixT}"* ]]; then
+				# Remove the file
+				rm "$file"
+				echo "Deleted file: $file"
+			fi
+			if [[ "$filename" == "${prefixB}"* ]]; then
+				# Remove the file
+				rm "$file"
+				echo "Deleted file: $file"
+			fi
+        fi
+    done
+else
+    echo "Folder not found: $folder"
+
+fi
+
+# Pause and wait for user input
+read -rp "Press Enter to exit..."
