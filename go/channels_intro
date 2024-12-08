@@ -1,0 +1,34 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func xyz() {
+	ch := make(chan bool)
+	go func() {
+		fmt.Println("do this 1st")
+		ch <- true
+
+	}()
+	value := <-ch
+	if value {
+		fmt.Println("do this 2")
+	}
+}
+
+func zyx() {
+	go func() {
+		fmt.Println("do this 2")
+	}()
+	fmt.Println("do this 1")
+	time.Sleep(50 * time.Millisecond) //needed or else 2 doesnt have time to give go func above time to execute before the runtime finishes.
+
+}
+
+func main() {
+	//xyz()
+	//zyx()
+	abc()
+}
